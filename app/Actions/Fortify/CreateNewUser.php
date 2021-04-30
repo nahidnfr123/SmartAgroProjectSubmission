@@ -3,6 +3,7 @@
 namespace App\Actions\Fortify;
 
 use App\Models\User;
+use App\Rules\NameStringValidateRule;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
@@ -23,8 +24,8 @@ class CreateNewUser implements CreatesNewUsers
         $user_type = $input['user_type'];
         Validator::make($input, [
             'user_type' => ['required', 'string'],
-            'first_name' => ['required', 'string', 'min:3', 'max:40'],
-            'last_name' => ['required', 'string', 'min:3', 'max:40'],
+            'first_name' => ['required', 'string', 'min:3', 'max:40', new NameStringValidateRule()],
+            'last_name' => ['required', 'string', 'min:3', 'max:40', new NameStringValidateRule()],
             'email' => ['required', 'string', 'email', 'max:80', Rule::unique(User::class),],
             'username' => ['required', 'string', 'max:15', 'min:3', Rule::unique(User::class),],
             'postal_code' => ['required_if:user_type,!=,customer', 'numeric', 'regex:/[0-9]{4,5}/'],

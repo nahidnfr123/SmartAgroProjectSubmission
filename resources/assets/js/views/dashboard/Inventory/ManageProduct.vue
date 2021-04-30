@@ -611,6 +611,7 @@ export default {
 
             if (!__this.productData.total_stock) __this.errors.total_stock = 'Total stock is required!';
             else if (parseInt(__this.productData.total_stock) < 0) __this.errors.total_stock = 'Total stock should be 0 or more!';
+            else if (parseInt(__this.productData.total_stock) > 2000) __this.errors.total_stock = 'Total stock should be less then or equal to 2000';
 
             if (!__this.productData.stock_type.trim()) __this.errors.stock_type = 'Stock price is required!';
 

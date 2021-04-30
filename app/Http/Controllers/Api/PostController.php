@@ -62,7 +62,7 @@ class PostController extends Controller
             'images.*' => "image|mimes:jpeg,jpg,png,gif|max:2048",
         ]);
         $post = new Post();
-        $post->title = $request->title;
+        $post->title = ucfirst($request->title);
         $post->slug = $request->slug;
         $post->type = $request->type;
         if ($request->status == 'false') {
@@ -152,7 +152,7 @@ class PostController extends Controller
         if ($mediaItems && $request->images && count($mediaItems) + count($request->images) > 4) {
             return response()->json(['error' => 'A post can contain maximum 4 images.'], 422);
         }
-        $post->title = $request->title;
+        $post->title = ucfirst($request->title);
         $post->slug = $request->slug;
         $post->type = $request->type;
         if ($request->status == 'false') {

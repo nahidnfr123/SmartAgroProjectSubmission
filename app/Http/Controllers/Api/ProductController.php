@@ -93,7 +93,7 @@ class ProductController extends Controller
             'description' => ['required', 'string'],
             'brand_id' => 'sometimes|nullable|numeric',
             'status' => ['required', 'string'],
-            'total_stock' => "required|numeric|min:1",
+            'total_stock' => "required|numeric|min:0|max:2000",
             'stock_type' => "required|string",
             'regular_price' => "required|numeric|digits_between:1,7|gte:retail_price",
             'retail_price' => "required|numeric|digits_between:1,7",
@@ -102,7 +102,7 @@ class ProductController extends Controller
             'images.*' => "image|mimes:jpeg,jpg,png,gif|max:2048",
         ]);
         $product = new Product();
-        $product->product_name = $request->product_name;
+        $product->product_name = ucfirst($request->product_name);
         //$product->product_slug = $request->product_slug;
         $product->description = $request->description;
         $product->brand_id = $request->brand_id;
@@ -172,7 +172,7 @@ class ProductController extends Controller
             'description' => ['required', 'string'],
             'brand_id' => 'sometimes|nullable|numeric',
             'status' => ['required', 'string'],
-            'total_stock' => "required|numeric|min:0",
+            'total_stock' => "required|numeric|min:0|max:2000",
             'stock_type' => "required|string",
             'regular_price' => "required|numeric|digits_between:1,7|gte:retail_price",
             'retail_price' => "required|numeric|digits_between:1,7",
@@ -181,7 +181,7 @@ class ProductController extends Controller
             'images.*' => "image|mimes:jpeg,jpg,png,gif|max:2048",
         ]);
         $product = Product::findOrFail($id);
-        $product->product_name = $request->product_name;
+        $product->product_name = ucfirst($request->product_name);
         //$product->product_slug = $request->product_slug;
         $product->description = $request->description;
         $product->brand_id = $request->brand_id;

@@ -49,7 +49,7 @@ class PostCategoryController extends Controller
         ]);
 
         $postCategory = new PostCategory();
-        $postCategory->title = $request->title;
+        $postCategory->title = ucfirst($request->title);
         $postCategory->slug = $request->slug;
         if ($request->parent_id != null && $request->parent_id != '') {
             $postCategory->parent_id = $request->parent_id;
@@ -100,7 +100,7 @@ class PostCategoryController extends Controller
             'title' => ['required', 'string', Rule::unique(PostCategory::class)->ignore($postCategory)],
             'slug' => ['required', 'string', Rule::unique(PostCategory::class)->ignore($postCategory)],
         ]);
-        $postCategory->title = $request->title;
+        $postCategory->title = ucfirst($request->title);
         $postCategory->slug = $request->slug;
         if ($postCategory->save()) {
             return (new PostCategoryResource($postCategory))->response();

@@ -49,7 +49,7 @@ class ProductCategoryController extends Controller
         ]);
 
         $productCategory = new ProductCategory();
-        $productCategory->title = $request->title;
+        $productCategory->title = ucfirst($request->title);
         $productCategory->slug = $request->slug;
         if ($request->parent_id != null && $request->parent_id != '') {
             $productCategory->parent_id = $request->parent_id;
@@ -100,7 +100,7 @@ class ProductCategoryController extends Controller
             'title' => ['required', 'string', Rule::unique(PostCategory::class)->ignore($productCategory)],
             'slug' => ['required', 'string', Rule::unique(PostCategory::class)->ignore($productCategory)],
         ]);
-        $productCategory->title = $request->title;
+        $productCategory->title = ucfirst($request->title);
         $productCategory->slug = $request->slug;
         if ($productCategory->save()) {
             return (new ProductCategoryResource($productCategory))->response();
