@@ -1,0 +1,10 @@
+*** Login
+*** Registration
+*** Social Login
+*** Email verification
+*** Forget password
+*** Reset password
+---------------------------------------
+Frontend Templating
+Frontend User Authentication
+
