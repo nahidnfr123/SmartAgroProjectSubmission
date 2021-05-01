@@ -2,25 +2,18 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="46b851a5-783b-4b26-96ce-1bce596dde7e" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/03-Smart-Agro-Camelion.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/03-Smart-Agro-Camelion.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Actions/Fortify/CreateNewUser.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Actions/Fortify/CreateNewUser.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Api/PostCategoryController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Api/PostCategoryController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Api/PostController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Api/PostController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Api/ProductCategoryController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Api/ProductCategoryController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Api/ProductController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Api/ProductController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Templates/farmie/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/Templates/farmie/style.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/dist/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/dist/js/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/dist/js/app.js.LICENSE.txt" beforeDir="false" afterPath="$PROJECT_DIR$/public/dist/js/app.js.LICENSE.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/assets/js/views/dashboard/Inventory/ManageProduct.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/assets/js/views/dashboard/Inventory/ManageProduct.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/assets/js/views/market/Cart.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/assets/js/views/market/Cart.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/assets/js/views/market/Market.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/assets/js/views/market/Market.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ComposerSettings" synchronizationState="SYNCHRONIZE">
+  <component name="ComposerSettings" doNotAsk="true" synchronizationState="SYNCHRONIZE">
     <pharConfigPath>$PROJECT_DIR$/composer.json</pharConfigPath>
     <execution />
   </component>
@@ -186,6 +179,9 @@
       <option name="presentableId" value="Default" />
       <updated>1619810854674</updated>
       <workItem from="1619810860656" duration="7571000" />
+      <workItem from="1619854989134" duration="1197000" />
+      <workItem from="1619859070934" duration="5927000" />
+      <workItem from="1619882275494" duration="989000" />
     </task>
     <servers />
   </component>

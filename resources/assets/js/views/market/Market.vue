@@ -205,13 +205,13 @@
                                         <!-- Product Tags -->
                                         <span class="product-tags bg-danger" v-if="!product.total_stock">Out of stock</span>
                                         <!-- Product Meta Data -->
-                                        <div class="product-meta-data">
-                                            <a href="" data-toggle="tooltip" data-placement="top" title="View Details"
+                                        <div class="product-meta-data" style="opacity: 1; visibility: visible;">
+                                            <a href="#" title="View Details"
                                                @click.stop.prevent="viewProduct(product)">
                                                 <i class="fas fa-eye"></i>
                                             </a>
                                             <template v-if="!roles || !roles.includes('farmer')">
-                                                <a href="" data-toggle="tooltip" data-placement="top" title="Add To Cart"
+                                                <a href="#" title="Add To Cart"
                                                    v-if="product.total_stock && canAddToCart"
                                                    @click.stop.prevent="addToCart(product)">
                                                     <i class="icon_cart_alt"></i>

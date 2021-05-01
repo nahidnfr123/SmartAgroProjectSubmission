@@ -1,6 +1,6 @@
 <template>
-    <div class="modal fade bd-example-modal-lg show" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" style="display: block; padding-right: 17px;">
-        <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal fade bd-example-modal-xl show" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" style="display: block; padding-right: 17px;">
+        <div class="modal-dialog modal-dialog-centered modal-xl">
             <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="modal-title">Cart</h4>
