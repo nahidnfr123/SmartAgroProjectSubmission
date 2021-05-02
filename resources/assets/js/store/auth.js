@@ -1,3 +1,5 @@
+import router from "../routes";
+
 window.axios = require('axios');
 
 
@@ -140,10 +142,15 @@ export default {
         me({dispatch, commit}) {
             return axios.get('/api/user').then((response) => {
                 //dispatch('auth/userAbilities', response.data, {root: true});
-                commit('SET_AUTHENTICATED', true);
-                commit('SET_USER', response.data.user);
-                commit('SET_ROLES', response.data.roles);
-                commit('SET_PERMISSIONS', response.data.permissions);
+                if (response.data.user && response.data.user.status !== 'blocked') {
+                    commit('SET_AUTHENTICATED', true);
+                    commit('SET_USER', response.data.user);
+                    commit('SET_ROLES', response.data.roles);
+                    commit('SET_PERMISSIONS', response.data.permissions);
+                }else{
+                    dispatch('logout');
+                    router.push({name: 'AccountBlocked'});
+                }
             }).catch(() => {
                 commit('SET_AUTHENTICATED', false);
                 commit('SET_USER', null);

@@ -137,6 +137,12 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/finder" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/polyfill-ctype" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/phar-io/version" />
+      <excludeFolder url="file://$MODULE_DIR$/public/admin" />
+      <excludeFolder url="file://$MODULE_DIR$/public/adminLTE" />
+      <excludeFolder url="file://$MODULE_DIR$/public/dist" />
+      <excludeFolder url="file://$MODULE_DIR$/public/fonts" />
+      <excludeFolder url="file://$MODULE_DIR$/public/frontend-assets" />
+      <excludeFolder url="file://$MODULE_DIR$/public/storage" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

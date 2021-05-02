@@ -80,15 +80,14 @@
                         </div>
 
                         <div class="mb-3">
-                            <div class="form-group">
-                                <label for="certificate">Certificate</label>
-                                <div class="custom-file">
-                                    <input type="file" class="custom-file-input" id="certificate" ref="certificateFileInput"
-                                           accept="pdf/*"
-                                           @change="onFilePicked">
-                                    <label class="custom-file-label" for="certificate">Choose file...</label>
-                                </div>
-                            </div>
+                            <label for="certificate" class="form-label">Certificate</label>
+                            <input class="form-control form-control-sm" type="file" id="certificate"
+                                   ref="certificateFileInput"
+                                   accept="pdf/*"
+                                   @change="onFilePicked">
+                            <template v-if="errors.certificate && Array.isArray(errors.certificate) ? errors.certificate[0] : errors.certificate">
+                                <p class="text-danger mt-1">{{ errors.certificate && Array.isArray(errors.certificate) ? errors.certificate[0] : errors.certificate }}</p>
+                            </template>
                         </div>
                     </template>
 
@@ -143,7 +142,9 @@ export default {
                 retailer_interest: '',
                 office_name: '',
                 job_title: '',
+                certificate: null
             },
+            certificateUrl: null,
             processing: false,
             errors: []
         }
@@ -197,8 +198,25 @@ export default {
             this.userDetails.state_id = value.state_id;
             this.userDetails.city_id = value.city_id;
         },
-        onFilePicked(){
-
+        onFilePicked(event) {
+            const files = event.target.files
+            let filename = files[0].name
+            if (/\.(pdf)$/i.test(filename)) {
+                if (files['size'] > 4511775) {
+                    alert('File size can not be bigger than 4 MB');
+                    return false;
+                } else {
+                    const fileReader = new FileReader()
+                    fileReader.addEventListener('load', () => {
+                        this.certificateUrl = fileReader.result
+                    });
+                    fileReader.readAsDataURL(files[0])
+                    this.userDetails.certificate = files[0]
+                }
+            } else {
+                alert('Only pdf file can be uploaded.');
+                return false;
+            }
         },
         async uploadUserDetails() {
             let __this = this;
@@ -207,16 +225,28 @@ export default {
             __this.clearUserDetailsError();
             __this.errors = {};
 
-            //__this.validateData();
+            __this.validateData();
 
             if (Object.keys(__this.errors).length) {
                 __this.$Progress.fail();
                 __this.processing = false;
                 return
             }
-            await this.storeUserDetails(this.userDetails).then(() => {
 
-            }).finally(() => {
+            const formData = new FormData();
+            formData.append('userType', this.userDetails.userType);
+            formData.append('acres', this.userDetails.acres);
+            formData.append('address', this.userDetails.address);
+            formData.append('country_id', this.userDetails.country_id);
+            formData.append('state_id', this.userDetails.state_id);
+            formData.append('city_id', this.userDetails.city_id);
+            formData.append('farmerType', this.userDetails.farmerType);
+            formData.append('retailer_interest', this.userDetails.retailer_interest);
+            formData.append('office_name', this.userDetails.office_name);
+            formData.append('job_title', this.userDetails.job_title);
+            formData.append('certificate', this.userDetails.certificate);
+
+            await this.storeUserDetails(formData).finally(() => {
                 __this.processing = false;
             });
             if (this.getUserDetailsErrors != null) {
@@ -240,7 +270,9 @@ export default {
                 if (!__this.userDetails.retailer_interest.trim()) __this.errors.retailer_interest = 'Please add your product interest.';
             }
             if (this.$route.params.usertype == 'agricultural-officer') {
-
+                if (!__this.userDetails.certificate) __this.errors.certificate = 'Certificate is required.';
+                if (!__this.userDetails.job_title) __this.errors.job_title = 'Job title is required.';
+                if (!__this.userDetails.office_name) __this.errors.office_name = 'Office name is required.';
             }
             if (!__this.userDetails.address.trim()) __this.errors.address = 'Address is required.';
             if (!__this.userDetails.country_id.toString().trim()) __this.errors.country_id = 'Country is required.';

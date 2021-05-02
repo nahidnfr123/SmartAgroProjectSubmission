@@ -5,7 +5,7 @@
                 <div class="cursor-pointer">
                     {{ data.title }} <span v-if="data.post_count != 0"> - ({{ data.post_count }})</span>
                 </div>
-                <div v-if="authUser && (authUser.id == data.user_id || buttons.includes('admin'))">
+                <div v-if="authUser && (authUser.id == data.user_id || buttons.includes('admin')) && user.status === 'active'">
                     <button class="btn btn-sm btn-primary" v-if="buttons && ( buttons.includes('add') || buttons.includes('admin') )"
                             @click.stop.prevent="toggleForm(data)"><i class="fas fa-plus"></i>
                     </button>
@@ -17,7 +17,7 @@
                     </button>
                 </div>
             </div>
-            <div v-if="showForm && data.id == parent_id">
+            <div v-if="showForm && data.id == parent_id && user.status === 'active'">
                 <div class="col-12 col-lg-10 row">
                     <div class="col">
                         <Custom_Text_Input
@@ -102,6 +102,7 @@ export default {
     },
     computed: {
         ...mapGetters({
+            user: 'auth/user',
             postCategoryErrors: 'postCategory/postCategoryErrors',
         })
     },

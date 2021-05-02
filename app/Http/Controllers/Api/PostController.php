@@ -247,6 +247,7 @@ class PostController extends Controller
         $postType = request()->input('articles_type');
         $paginateLimit = request()->input('limit') ? request()->input('limit') : 8;
 
+
         $posts = Post::query()
             ->with(['postCategory', 'user'])
             ->where('type', $postType)

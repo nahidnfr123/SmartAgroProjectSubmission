@@ -110,7 +110,8 @@
                                                     <router-link :to="{name: 'View Profile', params:{id:user.id}}" class="btn btn-sm btn-primary" title="View profile">
                                                         <i class="fas fa-eye"></i>
                                                     </router-link>
-                                                    <router-link :to="{name: 'Chat-Conversation', params:{to_id:user.id}}" class="btn btn-sm btn-success" title="Send message">
+                                                    <router-link :to="{name: 'Chat-Conversation', params:{to_id:user.id}}" class="btn btn-sm btn-success" title="Send message"
+                                                                 v-if="loggedInUser.status === 'active'">
                                                         <i class="fas fa-comment"></i>
                                                     </router-link>
                                                 </div>
@@ -165,7 +166,7 @@
 </template>
 
 <script>
-import mapActions from "vuex";
+import mapActions, {mapGetters} from "vuex";
 import Pagination from "../../../components/pagination";
 
 export default {
@@ -199,6 +200,11 @@ export default {
                 this.getUser(this.pagination.current_page, false);
             }, 500), deep: true
         },
+    },
+    computed:{
+        ...mapGetters({
+            loggedInUser: 'auth/user',
+        })
     },
     methods: {
         clearForm() {

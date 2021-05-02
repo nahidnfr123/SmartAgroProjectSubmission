@@ -38,18 +38,24 @@ class ProductController extends Controller
     {
         /*$products = Product::with('seller')->where('status', 1)->latest()->paginate(30);
         return (ProductResource::collection($products))->response();*/
-
         $query = request()->input('query');
+        $limit = request()->input('limit');
         $category = request()->input('category', []);
         $price = request()->input('price', []);
         $location = request()->input('location');
+
 
         $product_query = Product::query()
             ->where('status', 1)
             ->orderBy('id', 'DESC')
             ->withFilters($query, $category, $price, $location);
 
-        $products = $product_query->latest()->paginate(30);
+        if ($limit) {
+            $products = $product_query->latest()->take((int)$limit)->paginate((int)$limit);
+        } else {
+            $products = $product_query->latest()->paginate(30);
+        }
+
         return (ProductResource::collection($products))->response();
     }
 

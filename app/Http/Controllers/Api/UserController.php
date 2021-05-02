@@ -21,6 +21,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 
@@ -97,8 +98,8 @@ class UserController extends Controller
             'retailer_interest' => $user->hasRole('retailer') ? 'required|string' : '',
 
             'office_name' => $user->hasRole('agricultural-officer') ? 'required|string|min:5|max:60' : '',
-            'certificate' => $user->hasRole('agricultural-officer') ? 'file|mimes:pdf' : '',
-            'job_title' => $user->hasRole('agricultural-officer') ? 'required|string|min:2|max:18' : '',
+            'job_title' => $user->hasRole('agricultural-officer') ? 'required|string|min:2|max:30' : '',
+            'certificate' => $user->hasRole('agricultural-officer') ? 'required|file|mimes:pdf|max:4148' : '',
         ], [
             'country_id.required' => 'Country field is required!',
             'state_id.required' => 'State/Province field is required!',
@@ -117,7 +118,7 @@ class UserController extends Controller
         if (!$user) {
             abort(419, 'User authentication failed!');
         }
-        $this->validateUserDetailsRequest($request, $user);
+        //$this->validateUserDetailsRequest($request, $user);
 
         $roles = $user->getRoleNames()->toArray();
         $userType = explode('_', $request->userType);
@@ -154,6 +155,22 @@ class UserController extends Controller
                 $userDetails->user_id = $user->id;
                 $userDetails->office_name = $request->office_name;
                 $userDetails->job_title = $request->job_title;
+
+
+                if ($request->hasFile('certificate')) {
+                    $get_image = $request->file('certificate'); // get the image form post method...
+                    $fileNameWithExt = $get_image->getClientOriginalName(); // get full file name ...
+                    $fileName = pathinfo($fileNameWithExt, PATHINFO_FILENAME); // get only the file name without extension ....
+                    $extension = $get_image->getClientOriginalExtension();// get the file extension
+
+                    $newFileName = $user->first_name . '_' . $user->last_name . '_' . time() . '.' . $extension;
+                    $fileLocation = '/public/users/document/';
+                    $get_image->storeAs($fileLocation, $newFileName); // set the storage path ...
+                    $StorageLink2 = '/storage/users/document/' . $newFileName;
+                    $userDetails->certificate = $StorageLink2;
+                } else {
+                    return response()->json(['Error' => 'Work place document must be given.'], 400);
+                }
                 $userDetails->save();
             }
 

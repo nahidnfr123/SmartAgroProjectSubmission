@@ -32,7 +32,8 @@
                                         <i class="fas fa-plus"></i> Add friend
                                     </button>-->
                                     <router-link :to="{name: 'Chat-Conversation', params:{to_id:userProfile.id}}"
-                                                 class="btn btn-bg-gradient-x-purple-red btn-glow white" style="margin-left: 10px;" title="Send message">
+                                                 class="btn btn-bg-gradient-x-purple-red btn-glow white" style="margin-left: 10px;" title="Send message"
+                                                 v-if="loggedInUser.status === 'active'">
                                         <i class="fas fa-comment"></i> Message
                                     </router-link>
                                 </div>
@@ -267,6 +268,11 @@ export default {
     },
     activated() {
         this.getUserData(this.$route.params.id)
+    },
+    computed:{
+        ...mapGetters({
+            loggedInUser: 'auth/user',
+        })
     },
     methods: {
         async getUserData(id = this.$route.params.id) {

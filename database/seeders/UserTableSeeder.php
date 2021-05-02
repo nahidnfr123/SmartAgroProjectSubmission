@@ -136,7 +136,7 @@ class UserTableSeeder extends Seeder
         $userDetails->user_id = $officer->id;
         $userDetails->office_name = 'Bongobondhu krishi office, dhaka.';
         $userDetails->job_title = 'Field officer';
-        $userDetails->certificate = 'certificate1.pdf';
+        $userDetails->certificate = '/storage/users/document/certificate_2.pdf';
         $userDetails->save();
 
         $address = new Address();
@@ -161,12 +161,12 @@ class UserTableSeeder extends Seeder
         $officer->save();
         $officer->assignRole('agricultural-officer');
 
-        $userDetails = new OfficerDetails();
-        $userDetails->user_id = $officer->id;
-        $userDetails->office_name = 'Bongobondhu krishi office, dhaka.';
-        $userDetails->job_title = 'Field officer';
-        $userDetails->certificate = 'Field officer';
-        $userDetails->save();
+        $userDetails2 = new OfficerDetails();
+        $userDetails2->user_id = $officer->id;
+        $userDetails2->office_name = 'Bongobondhu krishi office, dhaka.';
+        $userDetails2->job_title = 'Field officer';
+        $userDetails2->certificate = '/storage/users/document/certificate_1.pdf';
+        $userDetails2->save();
 
         $address = new Address();
         $address->user_id = $officer->id;

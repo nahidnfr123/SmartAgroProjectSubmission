@@ -1,5 +1,5 @@
 <template>
-    <div class="app-content ">
+    <div class="app-content" v-if="user.status === 'active'">
         <contact-list :contacts="contacts" :selectedContact="selectedContact" :onlineUsers="onlineUsers"/>
         <conversations :contact="selectedContact" :messages="messages" @new="saveNewMessage($event)"/>
     </div>

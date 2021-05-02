@@ -8,7 +8,7 @@
                             <li class="nav-item mobile-menu d-md-none mr-auto"><a class="nav-link nav-menu-main menu-toggle hidden-xs" href="#"><i class="ft-menu font-large-1"></i></a></li>
                             <li class="nav-item d-none d-md-block"><a class="nav-link nav-menu-main menu-toggle hidden-xs" href="#"><i class="ft-menu"></i></a></li>
                             <li class="nav-item d-none d-md-block"><a class="nav-link nav-link-expand" href="#"><i class="ficon ft-maximize"></i></a></li>
-                            <li class="dropdown nav-item mega-dropdown d-none d-md-block"><a class="dropdown-toggle nav-link" href="#" data-toggle="dropdown">Mega</a>
+<!--                            <li class="dropdown nav-item mega-dropdown d-none d-md-block"><a class="dropdown-toggle nav-link" href="#" data-toggle="dropdown">Mega</a>
                                 <ul class="mega-dropdown-menu dropdown-menu row">
                                     <li class="col-md-2">
                                         <h6 class="dropdown-menu-header text-uppercase mb-1"><i class="ft-link"></i> Quick Links</h6>
@@ -91,14 +91,14 @@
                                         </form>
                                     </li>
                                 </ul>
-                            </li>
-                            <li class="dropdown d-none d-md-block mr-1"><a class="dropdown-toggle nav-link" id="apps-navbar-links" href="#" data-toggle="dropdown">
+                            </li>-->
+<!--                            <li class="dropdown d-none d-md-block mr-1"><a class="dropdown-toggle nav-link" id="apps-navbar-links" href="#" data-toggle="dropdown">
                                 Apps</a>
                                 <div class="dropdown-menu">
                                     <div class="arrow_box"><a class="dropdown-item" href="email-application.html"><i class="ft-user"></i> Email</a><a class="dropdown-item" href="chat-application.html"><i class="ft-mail"></i> Chat</a><a class="dropdown-item" href="project-summary.html"><i class="ft-briefcase"></i> Project Summary </a><a class="dropdown-item" href="full-calender.html"><i class="ft-calendar"></i> Calendar </a></div>
                                 </div>
-                            </li>
-                            <li class="nav-item dropdown navbar-search"><a class="nav-link dropdown-toggle hide" data-toggle="dropdown" href="#">
+                            </li>-->
+<!--                            <li class="nav-item dropdown navbar-search"><a class="nav-link dropdown-toggle hide" data-toggle="dropdown" href="#">
                                 <i class="fas fa-search"></i>
                             </a>
                                 <ul class="dropdown-menu">
@@ -113,7 +113,7 @@
                                         </form>
                                     </li>
                                 </ul>
-                            </li>
+                            </li>-->
                         </ul>
                         <ul class="nav navbar-nav float-right">
                             <li class="dropdown dropdown-language nav-item"><a class="dropdown-toggle nav-link" id="dropdown-flag" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="flag-icon flag-icon-us"></i><span class="selected-language"></span></a>
@@ -251,9 +251,9 @@
                                     <div class="arrow_box_right">
                                         <router-link class="dropdown-item" :to="{name:'Profile'}">
                                         <span class="avatar avatar-online">
-                                            <img :src="user.avatar" alt="avatar" height="36" width="40"
-                                                 style="width: 40px; height: 36px; border-radius: 100%; object-fit: cover; object-position: center center;">
-                                            <span class="user-name text-bold-700 ml-1">{{ user.username }}</span>
+<!--                                            <img :src="user.avatar" alt="avatar" height="36" width="40"
+                                                 style="width: 40px; height: 36px; border-radius: 100%; object-fit: cover; object-position: center center;">-->
+                                            <span class="user-name text-bold-700">{{ user.username | truncate(20) }}</span>
                                         </span>
                                         </router-link>
                                         <div class="dropdown-divider"></div>

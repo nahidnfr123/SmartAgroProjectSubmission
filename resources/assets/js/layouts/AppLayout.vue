@@ -70,6 +70,7 @@ export default {
                 if (usertype !== '') this.$router.replace({name: 'Survey', params: {usertype: usertype}});
             }
         },
+
     },
     computed: {
         ...mapGetters({

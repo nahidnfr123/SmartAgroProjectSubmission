@@ -1,5 +1,5 @@
 <template>
-    <div class="content-body position-relative">
+    <div class="content-body position-relative" v-if="user.status === 'active'">
 
         <div class="position-absolute overflow-loader d-flex justify-content-center" v-if="processing">
             <div class="spinner-border spinner-border-sm" role="status" aria-hidden="true" style="margin-top: 100px;"/>

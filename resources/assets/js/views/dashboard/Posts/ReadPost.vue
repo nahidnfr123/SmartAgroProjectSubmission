@@ -7,8 +7,10 @@
                         <h1 class="card-title" id="horz-layout-colored-control">{{ post.type | capitalize }}</h1>
                         <div class="pull-right">
                             <button class="btn btn-sm btn-success" @click="$router.back()">Back</button>
-                            <button class="btn btn-sm btn-primary" @click.stop.prevent="editPost(post)">Edit</button>
-                            <button class="btn btn-sm btn-danger" @click.stop.prevent="deletePosts(post)">Delete</button>
+                            <div class="mt-2" v-if="user.id == post.user_id || canAccess(['developer', 'super admin', 'admin'])">
+                            <button class="btn btn-sm btn-primary" @click.stop.prevent="editPost(post)" v-if="user.status === 'active'">Edit</button>
+                            <button class="btn btn-sm btn-danger" @click.stop.prevent="deletePosts(post)" v-if="user.status === 'active'">Delete</button>
+                            </div>
                         </div>
                     </div>
                     <div class="card-content collapse show">
@@ -106,6 +108,15 @@ export default {
             deletePost: 'post/deletePost',
             clearError: 'post/clearError',
         }),
+        canAccess(accessibleTo = ['developer', 'super admin']) {
+            if (this.userRole && this.userRole.length) {
+                for (let i = 0; i < this.userRole.length; i++) {
+                    if (accessibleTo.includes(this.userRole[i])) {
+                        return true;
+                    }
+                }
+            }
+        },
         async getPostCategories() {
             await this.fetchPostCategory().finally(() => {
             });
@@ -162,7 +173,7 @@ export default {
             });
         },
     },
-    mounted() {
+    activated() {
         this.getAPost();
         this.getPostCategories();
     }

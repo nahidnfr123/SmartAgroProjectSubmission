@@ -48,6 +48,7 @@ import CheckOut from "./views/market/CheckOut";
 import OrderSummary from "./views/market/OrderSummary";
 import Chat from "./views/dashboard/chat/Chat";
 import FindPeople from "./views/dashboard/Users/FindPeople";
+import AccountBlocked from "./views/AccountBlocked";
 
 function requireAuthenticated(to, from, next) {
     const authenticated = store.getters["auth/authenticated"];
@@ -63,8 +64,10 @@ function requireEmailVerified(to, from, next) {
     const authenticated = store.getters["auth/authenticated"];
     const user = store.getters["auth/user"];
 
-    if (to.name !== 'Login' && !authenticated || !user) next({path: '/login'})
-    else {
+    if (to.name !== 'Login' && !authenticated || !user) {
+        //checkUserDetails();
+        next({path: '/login'});
+    } else {
         if (user.email_verified_at != null) {
             next();
         } else {
@@ -143,6 +146,10 @@ const routes = [
     },
     {
         path: '/login', name: 'Login', component: Login, beforeEnter: preventAuthenticated
+    },
+    {
+        path: '/account_blocked', name: 'AccountBlocked', component: AccountBlocked,
+        beforeEnter: preventAuthenticated
     },
     {
         path: '/social-login/callback/:provider', name: 'SocialLogin', component: SocialLogin,
@@ -330,6 +337,7 @@ const routes = [
 
 const router = new VueRouter({
     mode: 'history',
+    saveScrollPosition: true,
     base: process.env.MIX_BASE_URL,
     routes,
     linkActiveClass: "active",

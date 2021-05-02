@@ -9,7 +9,7 @@
                             <h4>Posts</h4>
                             <div>
                                 <button type="button" style="display: none;" data-toggle="modal" data-target=".bd-example-modal-lg" ref="modalOpenButton"></button>
-                                <button type="button" class="btn btn-sm btn-primary btn-glow"
+                                <button type="button" class="btn btn-sm btn-primary btn-glow" v-if="user.status === 'active'"
                                         @click="addPost()">Add post
                                 </button>
                                 <button type="button" class="btn btn-sm btn-warning btn-glow"
@@ -140,8 +140,8 @@
                                     <!--                                    <div v-html=post.description style="max-height: 100px; overflow: hidden; padding: 0 0 20px 0!important;"></div>-->
 
                                     <div class="mt-2" v-if="user.id == post.user_id || canAccess(['developer', 'super admin', 'admin'])">
-                                        <button class="btn btn-sm btn-primary" @click.stop.prevent="editPost(post)">Edit</button>
-                                        <button class="btn btn-sm btn-danger" @click.stop.prevent="deletePosts(post)">Delete</button>
+                                        <button class="btn btn-sm btn-primary" @click.stop.prevent="editPost(post)" v-if="user.status === 'active'">Edit</button>
+                                        <button class="btn btn-sm btn-danger" @click.stop.prevent="deletePosts(post)" v-if="user.status === 'active'">Delete</button>
                                     </div>
                                     <div class="media d-flex">
                                         <div class="align-self-center">

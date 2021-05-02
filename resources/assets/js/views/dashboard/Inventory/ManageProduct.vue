@@ -9,7 +9,7 @@
                             <h4>Products</h4>
                             <div>
                                 <button type="button" class="btn btn-sm btn-primary btn-glow"
-                                        @click.stop.prevent="showForm()" v-if="!AddEditForm">Add Products
+                                        @click.stop.prevent="showForm()" v-if="!AddEditForm && user.status === 'active'">Add Products
                                 </button>
                                 <button type="button" class="btn btn-sm btn-warning btn-glow"
                                         @click.stop.prevent="closeSearch()">
@@ -28,7 +28,7 @@
                                 </button>
                             </div>
                         </div>
-                        <div class="card-body" v-if="AddEditForm">
+                        <div class="card-body" v-if="AddEditForm && user.status === 'active'">
                             <form method="post" enctype="multipart/form-data">
                                 <h3 v-if="editMode">Edit product</h3>
                                 <h3 v-else>Add product</h3>
@@ -295,10 +295,12 @@
                                     </button>
                                     <div class="dropdown-menu dropdown-menu-right">
                                         <router-link :to="{name:'View Product',params:{product_slug:product.product_slug}}" class="dropdown-item">View</router-link>
-                                        <a class="dropdown-item" href="" v-if="!product.deleted_at" @click.stop.prevent="editProduct(product)">Edit</a>
-                                        <a class="dropdown-item" href="" v-if="product.deleted_at" @click.stop.prevent="restore(product.id)">Restore</a>
-                                        <a class="dropdown-item" href="" @click.stop.prevent="deleteProducts(product)" v-if="!product.deleted_at">Delete</a>
-                                        <a class="dropdown-item" href="" @click.stop.prevent="deleteProducts(product)" v-else>Destroy</a>
+                                        <template v-if="user.status === 'active'">
+                                            <a class="dropdown-item" href="" v-if="!product.deleted_at" @click.stop.prevent="editProduct(product)">Edit</a>
+                                            <a class="dropdown-item" href="" v-if="product.deleted_at" @click.stop.prevent="restore(product.id)">Restore</a>
+                                            <a class="dropdown-item" href="" @click.stop.prevent="deleteProducts(product)" v-if="!product.deleted_at">Delete</a>
+                                            <a class="dropdown-item" href="" @click.stop.prevent="deleteProducts(product)" v-else>Destroy</a>
+                                        </template>
                                     </div>
                                 </div>
                             </div>
@@ -411,6 +413,7 @@ export default {
     },
     computed: {
         ...mapGetters({
+            user: 'auth/user',
             productCategory: 'productCategory/productCategories',
             getProducts: 'product/products',
             productsErrors: 'product/productsErrors',

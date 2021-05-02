@@ -130,18 +130,20 @@
                                                         <router-link :to="{name: 'View Profile', params:{id:user.id}}" class="dropdown-item">
                                                             <i class="fas fa-eye"></i> View profile
                                                         </router-link>
-                                                        <router-link :to="{name: 'Chat-Conversation', params:{to_id:user.id}}" class="dropdown-item">
-                                                            <i class="fas fa-comment"></i> Send message
-                                                        </router-link>
-                                                        <a class="dropdown-item" href="#" @click.stop.prevent="restoreAccount(user.id)" v-if="user.deleted_at">
-                                                            <i class="fas fa-trash-restore"></i> Restore
-                                                        </a>
-                                                        <a class="dropdown-item" href="#" @click.stop.prevent="deleteAccount(user.id)" v-if="!user.deleted_at">
-                                                            <i class="fas fa-trash"></i> Delete
-                                                        </a>
-                                                        <a class="dropdown-item" href="#" @click.stop.prevent="deleteAccount(user.id, 'destroy')" v-else>
-                                                            <i class="fas fa-trash"></i> Destroy
-                                                        </a>
+                                                        <template v-if="user.status === 'active'">
+                                                            <router-link :to="{name: 'Chat-Conversation', params:{to_id:user.id}}" class="dropdown-item">
+                                                                <i class="fas fa-comment"></i> Send message
+                                                            </router-link>
+                                                            <a class="dropdown-item" href="#" @click.stop.prevent="restoreAccount(user.id)" v-if="user.deleted_at">
+                                                                <i class="fas fa-trash-restore"></i> Restore
+                                                            </a>
+                                                            <a class="dropdown-item" href="#" @click.stop.prevent="deleteAccount(user.id)" v-if="!user.deleted_at">
+                                                                <i class="fas fa-trash"></i> Delete
+                                                            </a>
+                                                            <a class="dropdown-item" href="#" @click.stop.prevent="deleteAccount(user.id, 'destroy')" v-else>
+                                                                <i class="fas fa-trash"></i> Destroy
+                                                            </a>
+                                                        </template>
                                                     </div>
                                                 </div>
                                             </td>
@@ -365,14 +367,14 @@ export default {
 </script>
 
 <style scoped lang="css">
-.overflow-loader{
+.overflow-loader {
     position: absolute !important;
     top: 0;
-    left:0;
-    padding:0;
-    bottom:0;
+    left: 0;
+    padding: 0;
+    bottom: 0;
     z-index: 100000;
-    background: rgba(20,20,20,.4);
+    background: rgba(20, 20, 20, .4);
     height: 100%;
     width: 100%;
     text-align: center;

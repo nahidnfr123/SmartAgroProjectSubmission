@@ -25,7 +25,7 @@
                         <div class="card-body">
                             <div class="card-text">
                                 <form method="post">
-                                    <div class="row">
+                                    <div class="row" v-if="user.status === 'active'">
                                         <h3 class="text-muted">Add new post category</h3>
                                         <div class="col-12 col-lg-6">
                                             <Custom_Text_Input

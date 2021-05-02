@@ -111,11 +111,11 @@
                                 <h2><span>Let Us</span> Tell You Our Story</h2>
                                 <img :src="BaseUrl+'frontend-assets/img/core-img/decor.png'" alt="">
                             </div>
-                            <p>Lorem ipsum dolor sit amet, consectetu adipiscing elit. Etiam nunc elit, pretium atlanta urna
-                                veloci, fermentum malesuda mina. Donec auctor nislec neque sagittis, sit amet dapibus
-                                pellentesque donal feugiat. Nulla mollis magna non
-                                sanaliquet, volutpat do zutum, ultrices consectetur, ultrices at purus.</p>
-                            <a href="#" class="btn famie-btn mt-30">Read More</a>
+                            <p>The story of Smart agro begins in 2020, when Nahid Ferdous (our CEO and Co-founder) saw technology making things easier for the world, but not back home on the farm.
+                            </p>
+                            <p>
+                                The software tools available to farmers at the time were clumsy, difficult to use, and expensive. So over the next few years, the FarmLogs team started building simple software that would help farmers run more efficient operations.</p>
+                            <!--                            <a href="#" class="btn famie-btn mt-30">Read More</a>-->
                         </div>
                     </div>
 
@@ -235,114 +235,57 @@
                     </div>
                 </div>
 
-                <div class="row">
-
+                <div class="row" v-if="!loading && products && Object.keys(products).length">
                     <!-- Single Product Area -->
-                    <div class="col-12 col-sm-6 col-lg-3">
-                        <div class="single-product-area mb-50 wow fadeInUp" data-wow-delay="100ms">
+                    <div class="col-12 col-sm-6 col-lg-4" v-for="product in products" :key="product.id">
+                        <div class="single-product-area mb-50">
                             <!-- Product Thumbnail -->
                             <div class="product-thumbnail">
-                                <img :src="BaseUrl+'frontend-assets/img/bg-img/p1.jpg'" alt="">
+                                <img :src="product.first_image" alt="" style="height: 180px !important; object-fit: cover; object-position: center;">
                                 <!-- Product Tags -->
-                                <span class="product-tags">Hot</span>
+                                <span class="product-tags bg-danger" v-if="!product.total_stock">Out of stock</span>
                                 <!-- Product Meta Data -->
-                                <div class="product-meta-data">
-                                    <a href="#" data-toggle="tooltip" data-placement="top" title="Favourite"><i
-                                        class="icon_heart_alt"></i></a>
-                                    <a href="#" data-toggle="tooltip" data-placement="top" title="Add To Cart"><i
-                                        class="icon_cart_alt"></i></a>
-                                    <a href="#" data-toggle="tooltip" data-placement="top" title="Compare"><i
-                                        class="arrow_left-right_alt"></i></a>
+                                <div class="product-meta-data" style="opacity: 1; visibility: visible;">
+                                    <a href="#" title="View Details"
+                                       @click.stop.prevent="viewProduct(product)">
+                                        <i class="fas fa-eye"></i>
+                                    </a>
+                                    <template v-if="!roles || !roles.includes('farmer')">
+                                        <a href="#" title="Add To Cart"
+                                           v-if="product.total_stock && canAddToCart"
+                                           @click.stop.prevent="addToCart(product)">
+                                            <i class="icon_cart_alt"></i>
+                                        </a>
+                                    </template>
+                                    <!--<a href="#" data-toggle="tooltip" data-placement="top" title="Compare"><i class="arrow_left-right_alt"></i></a>-->
                                 </div>
                             </div>
                             <!-- Product Description -->
                             <div class="product-desc text-center pt-4">
-                                <a href="#" class="product-title">Strawberry</a>
-                                <h6 class="price">$17.99</h6>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Single Product Area -->
-                    <div class="col-12 col-sm-6 col-lg-3">
-                        <div class="single-product-area mb-50 wow fadeInUp" data-wow-delay="300ms">
-                            <!-- Product Thumbnail -->
-                            <div class="product-thumbnail">
-                                <img :src="BaseUrl+'frontend-assets/img/bg-img/p2.jpg'" alt="">
-                                <!-- Product Meta Data -->
-                                <div class="product-meta-data">
-                                    <a href="#" data-toggle="tooltip" data-placement="top" title="Favourite"><i
-                                        class="icon_heart_alt"></i></a>
-                                    <a href="#" data-toggle="tooltip" data-placement="top" title="Add To Cart"><i
-                                        class="icon_cart_alt"></i></a>
-                                    <a href="#" data-toggle="tooltip" data-placement="top" title="Compare"><i
-                                        class="arrow_left-right_alt"></i></a>
+                                <a href="#" class="product-title">{{ product.product_name }}</a>
+                                <div v-if="roles && roles.length && roles.includes('retailer')">
+                                    <div class="price">{{ product.retail_price }} {{ product.currency }}
+                                        <template v-if="product.stock_type"> / {{ product.stock_type }}</template>
+                                    </div>
                                 </div>
-                            </div>
-                            <!-- Product Description -->
-                            <div class="product-desc text-center pt-4">
-                                <a href="#" class="product-title">Baked Breads</a>
-                                <h6 class="price">$9.99</h6>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Single Product Area -->
-                    <div class="col-12 col-sm-6 col-lg-3">
-                        <div class="single-product-area mb-50 wow fadeInUp" data-wow-delay="500ms">
-                            <!-- Product Thumbnail -->
-                            <div class="product-thumbnail">
-                                <img :src="BaseUrl+'frontend-assets/img/bg-img/p3.jpg'" alt="">
-                                <!-- Product Meta Data -->
-                                <div class="product-meta-data">
-                                    <a href="#" data-toggle="tooltip" data-placement="top" title="Favourite"><i
-                                        class="icon_heart_alt"></i></a>
-                                    <a href="#" data-toggle="tooltip" data-placement="top" title="Add To Cart"><i
-                                        class="icon_cart_alt"></i></a>
-                                    <a href="#" data-toggle="tooltip" data-placement="top" title="Compare"><i
-                                        class="arrow_left-right_alt"></i></a>
+                                <div v-else>
+                                    <div class="price">{{ product.regular_price }} {{ product.currency }}
+                                        <template v-if="product.stock_type"> / {{ product.stock_type }}</template>
+                                    </div>
                                 </div>
-                            </div>
-                            <!-- Product Description -->
-                            <div class="product-desc text-center pt-4">
-                                <a href="#" class="product-title">Prime Beef</a>
-                                <h6 class="price">$59.99</h6>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Single Product Area -->
-                    <div class="col-12 col-sm-6 col-lg-3">
-                        <div class="single-product-area mb-50 wow fadeInUp" data-wow-delay="700ms">
-                            <!-- Product Thumbnail -->
-                            <div class="product-thumbnail">
-                                <img :src="BaseUrl+'frontend-assets/img/bg-img/p4.jpg'" alt="">
-                                <!-- Product Tags -->
-                                <span class="product-tags bg-danger">Sale</span>
-                                <!-- Product Meta Data -->
-                                <div class="product-meta-data">
-                                    <a href="#" data-toggle="tooltip" data-placement="top" title="Favourite"><i
-                                        class="icon_heart_alt"></i></a>
-                                    <a href="#" data-toggle="tooltip" data-placement="top" title="Add To Cart"><i
-                                        class="icon_cart_alt"></i></a>
-                                    <a href="#" data-toggle="tooltip" data-placement="top" title="Compare"><i
-                                        class="arrow_left-right_alt"></i></a>
+                                <div>Stock: {{ product.total_stock }}
+                                    <template v-if="product.stock_type"> {{ product.stock_type }}</template>
                                 </div>
-                            </div>
-                            <!-- Product Description -->
-                            <div class="product-desc text-center pt-4">
-                                <a href="#" class="product-title">Pure Honey</a>
-                                <h6 class="price"><span>$29.99</span> $19.99</h6>
+                                <!--                                        <h6 class="price">{{ product.regular_price }}</h6>-->
                             </div>
                         </div>
                     </div>
-
                 </div>
 
                 <div class="row">
                     <div class="col-12">
                         <div class="gotoshop-btn text-center wow fadeInUp" data-wow-delay="900ms">
-                            <a href="shop.html" class="btn famie-btn">Go to Store</a>
+                            <router-link :to="{name:'Market'}" class="btn famie-btn">Go to Store</router-link>
                         </div>
                     </div>
                 </div>
@@ -351,36 +294,36 @@
         <!-- ##### Our Products Area End ##### -->
 
         <!-- ##### Newsletter Area Start ##### -->
-        <section class="newsletter-area section-padding-100 bg-img bg-overlay jarallax"
-                 :style="'background-image:url(' +BaseUrl+'frontend-assets/img/bg-img/8.jpg)'">
-            <div class="container">
-                <div class="row justify-content-center">
-                    <div class="col-12 col-lg-10">
-                        <div class="newsletter-content">
-                            <!-- Section Heading -->
-                            <div class="section-heading white text-center">
-                                <p>What we do</p>
-                                <h2><span>Our Produce</span> Is Mainstay For Us</h2>
-                                <img :src="BaseUrl+'frontend-assets/img/core-img/decor2.png'" alt="">
+        <!--        <section class="newsletter-area section-padding-100 bg-img bg-overlay jarallax"
+                         :style="'background-image:url(' +BaseUrl+'frontend-assets/img/bg-img/8.jpg)'">
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <div class="col-12 col-lg-10">
+                                <div class="newsletter-content">
+                                    &lt;!&ndash; Section Heading &ndash;&gt;
+                                    <div class="section-heading white text-center">
+                                        <p>What we do</p>
+                                        <h2><span>Our Produce</span> Is Mainstay For Us</h2>
+                                        <img :src="BaseUrl+'frontend-assets/img/core-img/decor2.png'" alt="">
+                                    </div>
+                                    <p class="text-white mb-50 text-center">Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                                        Nullam at diam convallis ligula cursus bibendum sed at enim. Class aptent taciti sociosqu ad
+                                        litora torquent conubia nostra, per inceptos
+                                        himenaeos.</p>
+                                </div>
                             </div>
-                            <p class="text-white mb-50 text-center">Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                                Nullam at diam convallis ligula cursus bibendum sed at enim. Class aptent taciti sociosqu ad
-                                litora torquent conubia nostra, per inceptos
-                                himenaeos.</p>
+                        </div>
+                        &lt;!&ndash; Newsletter Form &ndash;&gt;
+                        <div class="row justify-content-center">
+                            <div class="col-12 col-lg-6">
+                                <form action="#" method="post">
+                                    <input type="text" class="form-control" placeholder="Enter your email">
+                                    <button type="submit" class="btn famie-btn">Subscribe</button>
+                                </form>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <!-- Newsletter Form -->
-                <div class="row justify-content-center">
-                    <div class="col-12 col-lg-6">
-                        <form action="#" method="post">
-                            <input type="text" class="form-control" placeholder="Enter your email">
-                            <button type="submit" class="btn famie-btn">Subscribe</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </section>
+                </section>-->
         <!-- ##### Newsletter Area End ##### -->
 
         <!-- ##### Farming Practice Area Start ##### -->
@@ -397,338 +340,103 @@
                     </div>
                 </div>
 
-                <div class="row">
-
-                    <!-- Single Farming Practice Area -->
-                    <div class="col-12 col-sm-6 col-lg-4">
+                <div class="row" v-if="farmingPracticePosts && Object.keys(farmingPracticePosts).length">
+                    <div class="col-12 col-sm-6 col-lg-4" v-for="post in farmingPracticePosts">
                         <div class="single-farming-practice-area mb-50 wow fadeInUp" data-wow-delay="100ms">
                             <!-- Thumbnail -->
                             <div class="farming-practice-thumbnail">
-                                <img :src="BaseUrl+'frontend-assets/img/bg-img/9.jpg'" alt="">
+                                <img :src="post.first_image?post.first_image:'/frontend-assets/placeholder.gif'" alt=""
+                                     style="width:100%; height: 200px!important; object-fit: cover; object-position: center center; background: #6c757d;" class="rounded">
                             </div>
                             <!-- Content -->
                             <div class="farming-practice-content text-center">
                                 <!-- Icon -->
-                                <div class="farming-icon">
-                                    <img :src="BaseUrl+'frontend-assets/img/core-img/chicken.png'" alt="">
-                                </div>
+                                <!--                                <div class="farming-icon">
+                                                                    <img src="/frontend-assets/img/core-img/chicken.png" alt="">
+                                                                </div>-->
                                 <span>Farming practice for</span>
-                                <h4>Chicken Farmed For Meat</h4>
-                                <p>Donec nec justo eget felis facilisis ferme ntum. Aliquam portitor mauris sit amet orci.
-                                    donec salim...</p>
+                                <router-link :to="{name:'Read Article', params:{articles_type: postFilters.articles_type, post_slug:post.slug}}">
+                                    <h4 style="cursor:pointer;">{{ post.title | truncate(60) }}</h4>
+                                </router-link>
+                                <div>{{ post.description | truncate(160) }}</div>
                             </div>
                         </div>
                     </div>
-
-                    <!-- Single Farming Practice Area -->
-                    <div class="col-12 col-sm-6 col-lg-4">
-                        <div class="single-farming-practice-area mb-50 wow fadeInUp" data-wow-delay="200ms">
-                            <!-- Thumbnail -->
-                            <div class="farming-practice-thumbnail">
-                                <img :src="BaseUrl+'frontend-assets/img/bg-img/10.jpg'" alt="">
-                            </div>
-                            <!-- Content -->
-                            <div class="farming-practice-content text-center">
-                                <!-- Icon -->
-                                <div class="farming-icon">
-                                    <img :src="BaseUrl+'frontend-assets/img/core-img/pig.png'" alt="">
-                                </div>
-                                <span>Farming practice for</span>
-                                <h4>Pig Farm Management</h4>
-                                <p>Donec nec justo eget felis facilisis ferme ntum. Aliquam portitor mauris sit amet orci.
-                                    donec salim...</p>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="gotoshop-btn text-center wow fadeInUp" data-wow-delay="900ms">
+                                <router-link :to="{name:'Articles', params: {'articles_type':'farming-practice'}}" class="btn famie-btn">Go TO Post</router-link>
                             </div>
                         </div>
                     </div>
-
-                    <!-- Single Farming Practice Area -->
-                    <div class="col-12 col-sm-6 col-lg-4">
-                        <div class="single-farming-practice-area mb-50 wow fadeInUp" data-wow-delay="300ms">
-                            <!-- Thumbnail -->
-                            <div class="farming-practice-thumbnail">
-                                <img :src="BaseUrl+'frontend-assets/img/bg-img/11.jpg'" alt="">
-                            </div>
-                            <!-- Content -->
-                            <div class="farming-practice-content text-center">
-                                <!-- Icon -->
-                                <div class="farming-icon">
-                                    <img :src="BaseUrl+'frontend-assets/img/core-img/cow.png'" alt="">
-                                </div>
-                                <span>Farming practice for</span>
-                                <h4>Beef Cattle Farming</h4>
-                                <p>Donec nec justo eget felis facilisis ferme ntum. Aliquam portitor mauris sit amet orci.
-                                    donec salim...</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Single Farming Practice Area -->
-                    <div class="col-12 col-sm-6 col-lg-4">
-                        <div class="single-farming-practice-area mb-50 wow fadeInUp" data-wow-delay="400ms">
-                            <!-- Thumbnail -->
-                            <div class="farming-practice-thumbnail">
-                                <img :src="BaseUrl+'frontend-assets/img/bg-img/12.jpg'" alt="">
-                            </div>
-                            <!-- Content -->
-                            <div class="farming-practice-content text-center">
-                                <!-- Icon -->
-                                <div class="farming-icon">
-                                    <img :src="BaseUrl+'frontend-assets/img/core-img/cereal.png'" alt="">
-                                </div>
-                                <span>Farming practice for</span>
-                                <h4>Improved Rice Cultivation</h4>
-                                <p>Donec nec justo eget felis facilisis ferme ntum. Aliquam portitor mauris sit amet orci.
-                                    donec salim...</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Single Farming Practice Area -->
-                    <div class="col-12 col-sm-6 col-lg-4">
-                        <div class="single-farming-practice-area mb-50 wow fadeInUp" data-wow-delay="500ms">
-                            <!-- Thumbnail -->
-                            <div class="farming-practice-thumbnail">
-                                <img :src="BaseUrl+'frontend-assets/img/bg-img/13.jpg'" alt="">
-                            </div>
-                            <!-- Content -->
-                            <div class="farming-practice-content text-center">
-                                <!-- Icon -->
-                                <div class="farming-icon">
-                                    <img :src="BaseUrl+'frontend-assets/img/core-img/sprout.png'" alt="">
-                                </div>
-                                <span>Farming practice for</span>
-                                <h4>Soil Improvement Techniques</h4>
-                                <p>Donec nec justo eget felis facilisis ferme ntum. Aliquam portitor mauris sit amet orci.
-                                    donec salim...</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Single Farming Practice Area -->
-                    <div class="col-12 col-sm-6 col-lg-4">
-                        <div class="single-farming-practice-area mb-50 wow fadeInUp" data-wow-delay="600ms">
-                            <!-- Thumbnail -->
-                            <div class="farming-practice-thumbnail">
-                                <img :src="BaseUrl+'frontend-assets/img/bg-img/14.jpg'" alt="">
-                            </div>
-                            <!-- Content -->
-                            <div class="farming-practice-content text-center">
-                                <!-- Icon -->
-                                <div class="farming-icon">
-                                    <img :src="BaseUrl+'frontend-assets/img/core-img/vegetable.png'" alt="">
-                                </div>
-                                <span>Farming practice for</span>
-                                <h4>Intensive Fruit Farming</h4>
-                                <p>Donec nec justo eget felis facilisis ferme ntum. Aliquam portitor mauris sit amet orci.
-                                    donec salim...</p>
-                            </div>
-                        </div>
-                    </div>
-
                 </div>
             </div>
         </section>
         <!-- ##### Farming Practice Area End ##### -->
 
-        <!-- ##### Testimonial Area Start ##### -->
-        <section class="testimonial-area bg-img bg-overlay section-padding-100 jarallax"
-                 :style="'background-image:url('+BaseUrl+ 'frontend-assets/img/bg-img/15.jpg)'">
-            <div class="container">
-                <div class="row">
-                    <div class="col-12">
-                        <!-- Testimonial Slides -->
-                        <div class="testimonial-slides owl-carousel">
-
-                            <!-- Single Slide -->
-                            <div class="single-slide">
-                                <!-- Testimonial Text -->
-                                <div class="testi-text d-flex">
-                                    <div class="quote-icon">
-                                        <img :src="BaseUrl+'frontend-assets/img/core-img/quote.png'" alt="">
-                                    </div>
-                                    <h5>"Thank you for your organic products. My children like your products and they use
-                                        for breakfast. We are loving the pure milk, freshly fruit and of course our staple,
-                                        Brown Rice Bread. Your Gluten Free breads truly make me feel
-                                        lighter and uplifted. It's the only bread I plan to eat for the rest of my life. I
-                                        will use them for many years."</h5>
-                                </div>
-                                <!-- Testimonial Thumbnail Name -->
-                                <div class="testimonial-thumbnail-name d-flex align-items-center">
-                                    <div class="testimonial-thumbnail">
-                                        <img :src="BaseUrl+'frontend-assets/img/bg-img/16.jpg'" alt="">
-                                    </div>
-                                    <div class="testimonial-name">
-                                        <h5>Mrs Lara Sullivan</h5>
-                                        <h6>Customer</h6>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Single Slide -->
-                            <div class="single-slide">
-                                <!-- Testimonial Text -->
-                                <div class="testi-text d-flex">
-                                    <div class="quote-icon">
-                                        <img :src="BaseUrl+'frontend-assets/img/core-img/quote.png'" alt="">
-                                    </div>
-                                    <h5>"Thank you for your organic products. My children like your products and they use
-                                        for breakfast. We are loving the pure milk, freshly fruit and of course our staple,
-                                        Brown Rice Bread. Your Gluten Free breads truly make me feel
-                                        lighter and uplifted. It's the only bread I plan to eat for the rest of my life. I
-                                        will use them for many years."</h5>
-                                </div>
-                                <!-- Testimonial Thumbnail Name -->
-                                <div class="testimonial-thumbnail-name d-flex align-items-center">
-                                    <div class="testimonial-thumbnail">
-                                        <img :src="BaseUrl+'frontend-assets/img/bg-img/16.jpg'" alt="">
-                                    </div>
-                                    <div class="testimonial-name">
-                                        <h5>Ajoy Das</h5>
-                                        <h6>Client</h6>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Single Slide -->
-                            <div class="single-slide">
-                                <!-- Testimonial Text -->
-                                <div class="testi-text d-flex">
-                                    <div class="quote-icon">
-                                        <img :src="BaseUrl+'frontend-assets/img/core-img/quote.png'" alt="">
-                                    </div>
-                                    <h5>"Thank you for your organic products. My children like your products and they use
-                                        for breakfast. We are loving the pure milk, freshly fruit and of course our staple,
-                                        Brown Rice Bread. Your Gluten Free breads truly make me feel
-                                        lighter and uplifted. It's the only bread I plan to eat for the rest of my life. I
-                                        will use them for many years."</h5>
-                                </div>
-                                <!-- Testimonial Thumbnail Name -->
-                                <div class="testimonial-thumbnail-name d-flex align-items-center">
-                                    <div class="testimonial-thumbnail">
-                                        <img :src="BaseUrl+'frontend-assets/img/bg-img/16.jpg'" alt="">
-                                    </div>
-                                    <div class="testimonial-name">
-                                        <h5>Akash Khan</h5>
-                                        <h6>Customer</h6>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <!-- ##### Testimonial Area End ##### -->
-
-        <!-- ##### Contact Area Start ##### -->
-        <section class="contact-area section-padding-100-0">
-            <div class="container">
-                <div class="row justify-content-between">
-
-                    <!-- Contact Content -->
-                    <div class="col-12 col-lg-5">
-                        <div class="contact-content mb-100">
-                            <!-- Section Heading -->
-                            <div class="section-heading">
-                                <p>Contact now</p>
-                                <h2><span>Get In Touch</span> With Us</h2>
-                                <img :src="BaseUrl+'frontend-assets/img/core-img/decor.png'" alt="">
-                            </div>
-                            <!-- Contact Form Area -->
-                            <div class="contact-form-area">
-                                <form action="index.html" method="post">
-                                    <div class="row">
-                                        <div class="col-lg-6">
-                                            <input type="text" class="form-control" name="name" placeholder="Your Name">
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <input type="email" class="form-control" name="email" placeholder="Your Email">
-                                        </div>
-                                        <div class="col-12">
-                                            <input type="text" class="form-control" name="subject"
-                                                   placeholder="Your Subject">
-                                        </div>
-                                        <div class="col-12">
-                                        <textarea name="message" class="form-control" cols="30" rows="10"
-                                                  placeholder="Your Message"></textarea>
-                                        </div>
-                                        <div class="col-12">
-                                            <button type="submit" class="btn famie-btn">Send Message</button>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Contact Maps -->
-                    <div class="col-lg-6">
-                        <div class="contact-maps mb-100">
-                            <iframe
-                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d28313.28917392649!2d-88.2740948914384!3d41.76219337461615!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x880efa1199df6109%3A0x8a1293b2ae8e0497!2sE+New+York+St%2C+Aurora%2C+IL%2C+USA!5e0!3m2!1sen!2sbd!4v1542893000723"
-                                allowfullscreen></iframe>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <!-- ##### Contact Area End ##### -->
 
         <!-- ##### News Area Start ##### -->
         <section class="news-area bg-gray section-padding-100-0">
             <div class="container">
-                <div class="row">
+                <div class="row" v-if="blogPosts && Object.keys(blogPosts).length">
 
-                    <!-- Featured Post Area -->
-                    <div class="col-12 col-lg-6">
-                        <div class="featured-post-area mb-100 wow fadeInUp" data-wow-delay="100ms">
-                            <img :src="BaseUrl+'frontend-assets/img/bg-img/17.jpg'" alt="">
-                            <!-- Post Content -->
-                            <div class="post-content">
-                                <h6>Post on <a href="#">18 Aug 2018</a> / <a href="#">Carlos Bacca</a></h6>
-                                <a href="#" class="post-title">Why innovation is key to maintaining our export market
-                                    share</a>
-                            </div>
-                        </div>
-                    </div>
+                    <template v-for="(post, index) in blogPosts">
 
-                    <!-- Single Blog Area -->
-                    <div class="col-12 col-lg-6 mb-100">
+                        <!-- Featured Post Area -->
+                        <div class="col-12 col-lg-6" v-if="index == 0">
+                            <div class="featured-post-area mb-100 wow fadeInUp" data-wow-delay="100ms">
+                                <img :src="post.first_image?post.first_image:'/frontend-assets/placeholder.gif'" alt="">
+                                <!-- Post Content -->
+                                <div class="post-content">
+                                    <h6>Post on <a class="post-date">{{ post.created_at | dateFormatMDY }}</a>
+                                        /
+                                        <router-link to="/login" v-if="!user">{{ post.author }}</router-link>
 
-                        <!-- Single Blog Area -->
-                        <div class="single-blog-area style-2 wow fadeInUp" data-wow-delay="300ms">
-                            <!-- Post Content -->
-                            <div class="post-content">
-                                <h6>Post on <a href="#">18 Aug 2018</a> / <a href="#">Peter Crough</a></h6>
-                                <a href="#" class="post-title">Rising cattle supplies see beef export lifted</a>
-                                <p>Maecenas facilisis quam orcit, velo porttitor arcu egestas eu. Maecenas donald imperdiet
-                                    nibh, quis. Etiam non scelerisque exited sagittis...</p>
-                            </div>
-                        </div>
+                                        <a :href="`dashboard/@${user.username}/profile`" v-if="user && user.id == post.user_id"
+                                           target="_blank">{{ post.author }}</a>
 
-                        <!-- Single Blog Area -->
-                        <div class="single-blog-area style-2 wow fadeInUp" data-wow-delay="500ms">
-                            <!-- Post Content -->
-                            <div class="post-content">
-                                <h6>Post on <a href="#">18 Aug 2018</a> / <a href="#">Peter Crough</a></h6>
-                                <a href="#" class="post-title">Cattle marts: Cows take a hit at the ringside</a>
-                                <p>Maecenas facilisis quam orcit, velo porttitor arcu egestas eu. Maecenas donald imperdiet
-                                    nibh, quis. Etiam non scelerisque exited sagittis...</p>
+                                        <a :href="`/dashboard/@${user.username}/users/view-profile/${post.user_id}`" v-else-if="user"
+                                           target="_blank" class="post-author">{{ post.author }}</a>
+                                    </h6>
+                                    <router-link :to="{name:'Read Article', params:{articles_type: postFilters.articles_type, post_slug:post.slug}}" class="post-title">
+                                        {{ post.title | truncate(60) }}
+                                    </router-link>
+
+                                </div>
                             </div>
                         </div>
 
                         <!-- Single Blog Area -->
-                        <div class="single-blog-area style-2 wow fadeInUp" data-wow-delay="700ms">
-                            <!-- Post Content -->
-                            <div class="post-content">
-                                <h6>Post on <a href="#">18 Aug 2018</a> / <a href="#">Peter Crough</a></h6>
-                                <a href="#" class="post-title">Malting barley price set to commence</a>
-                                <p>Maecenas facilisis quam orcit, velo porttitor arcu egestas eu. Maecenas donald imperdiet
-                                    nibh, quis. Etiam non scelerisque exited sagittis...</p>
+                        <div class="col-12 col-lg-6 mb-100" v-else>
+                            <!-- Single Blog Area -->
+                            <div class="single-blog-area style-2 wow fadeInUp" data-wow-delay="300ms">
+                                <!-- Post Content -->
+                                <div class="post-content">
+                                    <h6>Post on <a class="post-date">{{ post.created_at | dateFormatMDY }}</a>
+                                        /
+                                        <router-link to="/login" v-if="!user">{{ post.author }}</router-link>
+
+                                        <a :href="`dashboard/@${user.username}/profile`" v-if="user && user.id == post.user_id"
+                                           target="_blank">{{ post.author }}</a>
+
+                                        <a :href="`/dashboard/@${user.username}/users/view-profile/${post.user_id}`" v-else-if="user"
+                                           target="_blank" class="post-author">{{ post.author }}</a>
+                                    </h6>
+                                    <router-link :to="{name:'Read Article', params:{articles_type: postFilters.articles_type, post_slug:post.slug}}" class="post-title">
+                                        {{ post.title | truncate(60) }}
+                                    </router-link>
+                                    <div>{{ post.description | truncate(160) }}</div>
+                                </div>
                             </div>
                         </div>
+                    </template>
 
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="gotoshop-btn text-center wow fadeInUp" data-wow-delay="900ms">
+                                <router-link :to="{name:'Articles', params: {'articles_type':'blog'}}" class="btn famie-btn">Go TO Blog</router-link>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -739,6 +447,7 @@
 
 <script>
 import NFR_VueForm from "../CustomComponents/NFR_Forms/components/All";
+import {mapActions, mapGetters} from "vuex";
 
 export default {
     name: "Home",
@@ -746,10 +455,124 @@ export default {
     data() {
         return {
             BaseUrl: process.env.MIX_BASE_URL,
+            products: {},
+            farmingPracticePosts: {},
+            blogPosts: {},
+            loading: false,
+            pagination: {
+                current_page: 1
+            },
+            productFilters: {
+                query: '',
+                category: [],
+                category_name: '',
+                price: [],
+                location: [],
+                limit: 6,
+            },
+            postFilters: {
+                articles_type: 'farming-practice',
+                query: "",
+                category_name: '',
+                categories: [],
+                limit: '6',
+            },
+            blogPostFilters: {
+                articles_type: 'blog',
+                query: "",
+                category_name: '',
+                categories: [],
+                limit: '4',
+            }
         }
     },
-    method: {
+    computed: {
+        ...mapGetters({
+            user: 'auth/user',
+            roles: 'auth/roles',
+            cart: 'cart/cart',
+        }),
+    },
+    activated() {
+        this.canAddToCart = true;
+        this.checkCanAddToCart();
+        this.getProducts(false);
+        this.getFarmingPracticePosts();
+        this.getBlogPosts();
+    },
+    deactivated() {
+        this.canAddToCart = true;
+    },
+    methods: {
+        ...mapActions({
+            getCart: 'cart/getCart',
+        }),
+        async getProducts(load = true) {
+            this.loading = load;
+            await axios.get(`api/products/all?page=${this.pagination.current_page}`, {
+                params: _.omit(this.productFilters, 'category_name')
+            }).then((response) => {
+                this.products = response.data.data;
+                if (this.searching) {
+                    const el = this.$refs.ScrollPoint;
+                    if (el) el.scrollIntoView({behavior: 'smooth'});
+                }
+            }).catch(error => {
+                let err = error.response.data.errors;
+                this.$store.dispatch('snackbar/addSnack', {color: 'danger', msg: 'Server error', snakbarType: 'Error'}, {root: true});
+            }).finally(() => {
+                this.loading = false;
+                this.searching = false;
+            });
+        },
+        checkCanAddToCart() {
+            const roles = this.roles;
+            if (roles && roles.length) {
+                for (let key in roles) {
+                    if (!['customer', 'retailer'].includes(roles[key])) {
+                        localStorage.removeItem("cart");
+                        this.canAddToCart = false;
+                        return;
+                    }
+                }
+            }
+        },
+        addToCart(product) {
+            let stock = product.total_stock;
+            let cartQuantity = 0;
+            let cartItems = this.cart;
+            let productInTheCart = cartItems.findIndex(item => item.product_slug === product.product_slug);
+            if (productInTheCart !== -1) {
+                cartQuantity = cartItems[productInTheCart].quantity;
+            }
+            if (stock <= cartQuantity) {
+                this.$store.dispatch('snackbar/addSnack', {color: 'danger', msg: 'No more products in stock.', snakbarType: 'Warning'}, {root: true});
+                return;
+            }
 
+            // Add to cart ...
+            this.$store.commit('cart/addToCart', product);
+            this.$store.dispatch('snackbar/addSnack', {color: 'success', msg: `Success.`, snakbarType: 'Success'}, {root: true});
+            this.getCart();
+        },
+        async getFarmingPracticePosts(page = this.pagination.current_page) {
+            await axios.get(`api/post/frontend?page=${page}`, {
+                params: _.omit(this.postFilters, 'category_name')
+            }).then((response) => {
+                this.farmingPracticePosts = response.data.data;
+            }).catch((error) => {
+
+            });
+        },
+        async getBlogPosts(page = this.pagination.current_page) {
+            await axios.get(`api/post/frontend?page=${page}`, {
+                params: _.omit(this.blogPostFilters, 'category_name')
+            }).then((response) => {
+                this.blogPosts = response.data.data;
+            }).catch((error) => {
+
+            });
+        },
     },
     mounted() {
         const plugin = document.createElement("script");

@@ -73,11 +73,17 @@ export default {
         async storeUserDetails({commit, dispatch}, userData) {
             let err = null;
             let url = '';
-            if (!userData.userType) {
+            /*if (!userData.userType) {
                 dispatch('snackbar/addSnack', {color: 'danger', msg: 'User type is undefined.', snakbarType: 'Error'}, {root: true});
                 return;
+            }*/
+            const config = {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                }
             }
-            await axios.post('/api/user-details/upload', userData)
+            await axios.post('/api/user-details/upload', userData, config)
                 .then(() => {
                     if (!err) return dispatch('getUserDetails');
                     dispatch('snackbar/addSnack', {color: 'success', msg: 'Account setup successful.', snakbarType: 'Success'}, {root: true});

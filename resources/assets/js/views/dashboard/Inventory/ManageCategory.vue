@@ -21,7 +21,7 @@
                                                     </ul>
                                                 </div>-->
                     </div>
-                    <div class="card-content collpase show">
+                    <div class="card-content collpase show" v-if="user.status === 'active'">
                         <div class="card-body">
                             <div class="card-text">
                                 <form method="post">
