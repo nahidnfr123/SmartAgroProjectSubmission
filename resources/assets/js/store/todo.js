@@ -173,7 +173,7 @@ export default {
             return await axios.post('api/todos', todo)
                 .then(response => {
                     commit('newTodo', response.data.data);
-                    dispatch('snackbar/addSnack', {color: 'green-500', msg: 'Todo List successfully added.'}, {root: true});
+                    dispatch('snackbar/addSnack', {color: 'success', msg: 'Todo List successfully added.', snakbarType: 'Success'}, {root: true});
                 }).catch(error => {
                     generateErrors({commit, dispatch}, error, err, "Error adding todo!");
                 });
@@ -186,7 +186,7 @@ export default {
             return await axios.put(`api/todos/${todo.id}`, todo)
                 .then(response => {
                     commit('updateTodo', response.data.data);
-                    dispatch('snackbar/addSnack', {color: 'green-500', msg: 'Todo updated successfully.'}, {root: true});
+                    dispatch('snackbar/addSnack', {color: 'success', msg: 'Todo updated successfully.', snakbarType: 'Success'}, {root: true});
                 }).catch(error => {
                     generateErrors({commit, dispatch}, error, err, "Error updating todo!");
                 });
@@ -196,7 +196,7 @@ export default {
             return await axios.put(`api/todos/move/${data.todoId}`, data)
                 .then(response => {
                     commit('moveTodo', response.data.data);
-                    dispatch('snackbar/addSnack', {color: 'green-500', msg: 'Todo moved successfully.'}, {root: true});
+                    dispatch('snackbar/addSnack', {color: 'success', msg: 'Todo moved successfully.', snakbarType: 'Success'}, {root: true});
                 }).catch(error => {
                     generateErrors({commit, dispatch}, error, err, "Error moving todo!", true);
                 });
@@ -206,7 +206,7 @@ export default {
             return await axios.delete('api/todos/' + todo.id)
                 .then(response => {
                     commit('deleteTodo', response.data.data);
-                    dispatch('snackbar/addSnack', {color: 'green-500', msg: 'Todo deleted successfully.'}, {root: true});
+                    dispatch('snackbar/addSnack', {color: 'success', msg: 'Todo deleted successfully.', snakbarType: 'Success'}, {root: true});
                 }).catch(error => {
                     generateErrors({commit, dispatch}, error, err, "Error deleting todo!", true);
                 });
@@ -216,7 +216,7 @@ export default {
             return await axios.post('api/todos/addTask', task)
                 .then(response => {
                     commit('newTask', response.data.data);
-                    dispatch('snackbar/addSnack', {color: 'green-500', msg: 'Task successfully added.'}, {root: true});
+                    dispatch('snackbar/addSnack', {color: 'success', msg: 'Task successfully added.', snakbarType: 'Success'}, {root: true});
                 }).catch(error => {
                     generateErrors({commit, dispatch}, error, err, "Error adding task!");
                 });
@@ -226,7 +226,7 @@ export default {
             return await axios.put("api/todos/updateTask/" + taskData.taskId, taskData)
                 .then(response => {
                     commit('updateTask', response.data.data);
-                    dispatch('snackbar/addSnack', {color: 'green-500', msg: 'Task updated successfully.'}, {root: true});
+                    dispatch('snackbar/addSnack', {color: 'success', msg: 'Task updated successfully.', snakbarType: 'Success'}, {root: true});
                 }).catch(error => {
                     generateErrors({commit, dispatch}, error, err, "Error updating task!");
                 });
@@ -236,7 +236,7 @@ export default {
             return await axios.delete('api/todos/deleteTask/' + taskData.id)
                 .then(response => {
                     commit('deleteTask', response.data.data);
-                    dispatch('snackbar/addSnack', {color: 'green-500', msg: 'Task deleted successfully.'}, {root: true});
+                    dispatch('snackbar/addSnack', {color: 'success', msg: 'Task deleted successfully.', snakbarType: 'Success'}, {root: true});
                 }).catch(error => {
                     generateErrors({commit, dispatch}, error, err, "Error deleting task!", true);
                 });

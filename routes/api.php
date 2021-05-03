@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\PostController;
 use App\Http\Controllers\Api\ProductCategoryController;
 use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\ProductOrderController;
+use App\Http\Controllers\Api\TodosController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Auth\SocialAuthController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
@@ -158,21 +159,25 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('/user/show/{id}', [UserController::class, 'show']);
     Route::get('/user/show/{id}/products', [UserController::class, 'showUserProducts']);
     Route::post('/user/avatar/upload', [UserController::class, 'uploadAvatar']);
+
     Route::get('/user/address', [UserController::class, 'getAddress']);
     Route::post('/user/add-address', [UserController::class, 'addAddress']);
     Route::delete('/user/address/remove/{id}', [UserController::class, 'removeAddress']);
+
+    Route::put('/user/{id}/update', [UserController::class, 'updateUserData']);
 
 
     Route::get('/contacts', [ChatAppController::class, 'contacts']); // Get authors ...
     Route::get('/chat/messages/{id}', [ChatAppController::class, 'getMessages']); // Get authors ...
     Route::post('/chat/message/send', [ChatAppController::class, 'sendMessage']); // Get authors ...
 
+
     Route::prefix('todos')->group(function () {
-        /*Route::post('/addTask', [TodosController::class, 'addTask']);
+        Route::post('/addTask', [TodosController::class, 'addTask']);
         Route::put('/updateTask/{taskId}', [TodosController::class, 'updateTask']);
         Route::delete('/deleteTask/{taskId}', [TodosController::class, 'deleteTask']);
         Route::put('/move/{todoId}', [TodosController::class, 'moveTodo']);
-        Route::apiResource('/', TodosController::class);*/
+        Route::apiResource('/', TodosController::class);
     });
 
 

@@ -18,7 +18,6 @@ class CreateFarmerDetailsTable extends Migration
             $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->integer('acres');
             $table->string('farmer_type');
-            $table->text('about')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

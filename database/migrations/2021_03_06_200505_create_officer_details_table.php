@@ -19,7 +19,6 @@ class CreateOfficerDetailsTable extends Migration
             $table->string('office_name')->nullable();
             $table->string('job_title')->nullable();
             $table->string('certificate');
-            $table->text('about')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

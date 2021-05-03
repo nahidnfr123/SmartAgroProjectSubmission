@@ -17,7 +17,6 @@ class CreateRetailerDetailsTable extends Migration
             $table->id();
             $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->string('retailer_interest');
-            $table->text('about')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

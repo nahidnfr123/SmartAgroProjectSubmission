@@ -285,6 +285,35 @@ class UserController extends Controller
     }
 
 
+    public function updateUserData(Request $request, $id): \Illuminate\Http\JsonResponse
+    {
+        $user = User::findOrFail(\auth()->id());
+        $request->merge(['dob' => date('Y-m-d', strtotime($request->dob))]);
+        $this->validate($request, [
+            'postal_code' => ['required', 'string'],
+            'dob' => 'nullable|date_format:Y-m-d|before:-18 years',
+            'mobile_number' => ['required', 'numeric'],
+            'about' => ['nullable', 'string'],
+
+            /*'acres' => $user->hasRole('farmer') ? 'required|numeric' : '',
+            'farmerType' => $user->hasRole('farmer') ? 'required|string' : '',
+
+            'retailer_interest' => $user->hasRole('retailer') ? 'required|string' : '',
+            'office_name' => $user->hasRole('agricultural-officer') ? 'required|string|min:5|max:60' : '',
+            'job_title' => $user->hasRole('agricultural-officer') ? 'required|string|min:2|max:30' : '',*/
+        ], [
+            'dob.before' => 'You age should be at-least 18 years old.',
+        ]);
+
+        $user->postal_code = $request->postal_code;
+        $user->about = $request->about;
+        $user->dob = $request->dob;
+        $user->mobile_number = $request->mobile_number;
+        $user->save();
+        return (new UserResource($user))->response();
+    }
+
+
     public function updateStatus(Request $request, $id)
     {
         $user = User::findOrFail($id);

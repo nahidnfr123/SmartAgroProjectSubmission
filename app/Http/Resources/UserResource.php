@@ -26,6 +26,7 @@ class UserResource extends JsonResource
             'dob' => $this->dob,
             'mobile_number' => $this->mobile_number,
             'status' => $this->status,
+            'postal_code' => $this->postal_code,
             'avatar' => $this->avatar,
             'verified_at' => $this->verified_at,
             'created_at' => $this->created_at,
@@ -36,6 +37,7 @@ class UserResource extends JsonResource
             'farmer' => $this->farmer,
             'retailer' => $this->retailer,
             'officer' => $this->officer,
+            'about' => $this->about,
 
             'roles' => $this->getRoleNames(),
         ];

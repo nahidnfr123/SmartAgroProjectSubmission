@@ -26,12 +26,19 @@
                                 </div>
                             </div>
                             <div class="media-body text-left  mt-1">
-                                <h3 class="font-large-1 black">{{ user.first_name + ' ' + user.last_name }}
-                                    <span class="font-medium-1 black">
+                                <h3 class="font-large-1 black">{{ user.first_name + ' ' + user.last_name }}</h3>
+                                <div class="d-flex">
+                                    <p class="font-medium-1 black">
                                         ( <span v-for="(role, i) in $store.state.auth.userRoles" :key=i>{{ role + ', ' }} </span> )
-                                    </span>
-                                </h3>
-                                <p class="black"><i class="fas fa-map-marker-alt"></i> New York, USA </p>
+                                    </p>
+                                    <p class="ml-2 black" v-if="userAddress && Object.keys(userAddress).length">
+                                        <i class="fas fa-map-marker-alt"></i>
+                                        <span v-if="userAddress[0].address">{{ userAddress[0].address }} </span>
+                                        <span v-if="userAddress[0].city">, {{ userAddress[0].city.name }}</span>
+                                        <span v-if="userAddress[0].state">, {{ userAddress[0].state.name }}</span>
+                                        <span v-if="userAddress[0].country">, {{ userAddress[0].country.name }} </span>
+                                    </p>
+                                </div>
                                 <div>
                                     <button class="btn btn-bg-gradient-x-blue-green btn-glow white" style="margin-left: 10px;"
                                             @click="displayUpdateProfileModal = true">
@@ -85,7 +92,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-xl-9 col-lg-7 col-md-12" v-if="userProfile && Object.keys(userProfile).length">
+                    <div class="col-xl-9 col-lg-7 col-md-12" v-if="userDetails && Object.keys(userDetails).length">
                         <!--Project Timeline div starts-->
                         <div id="timeline">
                             <div class="card">
@@ -97,40 +104,41 @@
                                 <div class="card-body">
                                     <div class="card-block">
                                         <div>
-                                            <div class="mb-1"><strong>Email: </strong>{{ userProfile.email }}</div>
-                                            <div class="mb-1" v-if="userProfile.postal_code"><strong>Postal code: </strong>{{ userProfile.postal_code }}</div>
-                                            <div class="mb-1" v-if="userProfile.gender"><strong>Gender: </strong>{{ userProfile.gender }}</div>
-                                            <div class="mb-1" v-if="userProfile.dob"><strong>Dob: </strong>{{ userProfile.dob }}</div>
-                                            <div class="mb-1" v-if="userProfile.farmer">
-                                                <div class="mb-1" v-if="userProfile.farmer.farmer_type">
-                                                    <strong>Farmer type: </strong> {{ userProfile.farmer.farmer_type }}
+                                            <div class="mb-1"><strong>Email: </strong>{{ userDetails.email }}</div>
+                                            <div class="mb-1" v-if="userDetails.postal_code"><strong>Postal code: </strong>{{ userDetails.postal_code }}</div>
+                                            <div class="mb-1" v-if="userDetails.gender"><strong>Gender: </strong>{{ userDetails.gender }}</div>
+                                            <div class="mb-1" v-if="userDetails.dob"><strong>Dob: </strong>{{ userDetails.dob | dateFormatMDY() }}</div>
+                                            <div class="mb-1" v-if="userDetails.mobile_number"><strong>Mobile: </strong>{{ userDetails.mobile_number }}</div>
+                                            <div class="mb-1" v-if="userDetails.farmer">
+                                                <div class="mb-1" v-if="userDetails.farmer.farmer_type">
+                                                    <strong>Farmer type: </strong> {{ userDetails.farmer.farmer_type }}
                                                 </div>
-                                                <div class="mb-1" v-if="userProfile.farmer.acres">
-                                                    <strong>Field area: </strong> {{ userProfile.farmer.acres }}, acres
+                                                <div class="mb-1" v-if="userDetails.farmer.acres">
+                                                    <strong>Field area: </strong> {{ userDetails.farmer.acres }}, acres
                                                 </div>
-                                                <div class="mb-1" v-if="userProfile.farmer.about">
-                                                    <strong>About </strong>
+                                                <div class="mb-1" v-if="userDetails.about">
+                                                    <strong>About: </strong>
                                                     <div>
-                                                        {{ userProfile.about }}
+                                                        {{ userDetails.about }}
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="mb-1" v-if="userProfile.officer">
-                                                <div class="mb-1"><strong>Office name: </strong>{{ userProfile.officer.office_name }}</div>
-                                                <div class="mb-1"><strong>Job title: </strong>{{ userProfile.officer.job_title }}</div>
-                                                <div class="mb-1" v-if="userProfile.officer.about">
-                                                    <strong>About </strong>
+                                            <div class="mb-1" v-if="userDetails.officer">
+                                                <div class="mb-1"><strong>Office name: </strong>{{ userDetails.officer.office_name }}</div>
+                                                <div class="mb-1"><strong>Job title: </strong>{{ userDetails.officer.job_title }}</div>
+                                                <div class="mb-1" v-if="userDetails.about">
+                                                    <strong>About: </strong>
                                                     <div>
-                                                        {{ userProfile.about }}
+                                                        {{ userDetails.about }}
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="mb-1" v-if="userProfile.retailer">
-                                                <div class="mb-1"><strong>Retailer interest: </strong>{{ userProfile.retailer.retailer_interest }}</div>
-                                                <div class="mb-1" v-if="userProfile.retailer.about">
-                                                    <strong>About </strong>
+                                            <div class="mb-1" v-if="userDetails.retailer">
+                                                <div class="mb-1"><strong>Retailer interest: </strong>{{ userDetails.retailer.retailer_interest }}</div>
+                                                <div class="mb-1" v-if="userDetails.about">
+                                                    <strong>About: </strong>
                                                     <div>
-                                                        {{ userProfile.about }}
+                                                        {{ userDetails.about }}
                                                     </div>
                                                 </div>
                                             </div>
@@ -214,7 +222,8 @@
 
         <update-profile-modal
             :displayModal="displayUpdateProfileModal"
-            @displayModalClose="displayUpdateProfileModal = false"/>
+            @displayModalClose="displayUpdateProfileModal = false"
+            @updated="getUserWithAddress()"/>
 
     </div>
     <!-- END: Content-->
@@ -225,6 +234,7 @@ import {mapActions, mapGetters} from "vuex";
 import UpdatePassword from "../../../components/modals/updatePasswordModal";
 import Pagination from "../../../components/pagination";
 import UpdateProfileModal from "./UpdateProfileModal";
+import axios from "axios";
 
 export default {
     name: "Profile",
@@ -232,7 +242,6 @@ export default {
     data() {
         return {
             displayUpdateProfileModal: false,
-            userProfile: {},
             products: {},
             showUpdatePasswordModal: false,
             avatar: '',
@@ -241,11 +250,13 @@ export default {
             pagination: {
                 current_page: 1
             },
+            userDetails: {},
+            userAddress: {},
         }
     },
     activated() {
-        this.userProfile = this.user;
         this.getProducts();
+        this.getUserWithAddress();
     },
     computed: {
         ...mapGetters({
@@ -260,6 +271,16 @@ export default {
         }),
         changePasswordForm() {
             this.showUpdatePasswordModal = true;
+        },
+        async getUserWithAddress() {
+            this.userDetails = '';
+            await axios.get(`api/user/address`).then((res) => {
+                if (res.data && res.data.data) {
+                    this.displayUpdateProfileModal = false;
+                    this.userDetails = res.data.data;
+                    this.userAddress = res.data.data.address;
+                }
+            })
         },
         deleteAccount() {
             this.$swal.fire({
@@ -330,7 +351,7 @@ export default {
             this.getProducts();
         },
         async getProducts(page = this.pagination.current_page) {
-            await axios.get(`/api/user/show/${this.userProfile.id}/products?page=${page}`)
+            await axios.get(`/api/user/show/${this.user.id}/products?page=${page}`)
                 .then((response) => {
                     this.products = response.data.data;
                     this.pagination = response.data.meta;

@@ -15,17 +15,18 @@
                                 </a>
                             </div>
                             <div class="media-body text-left  mt-1">
-                                <h3 class="font-large-1 black">{{ userProfile.first_name + ' ' + userProfile.last_name }}
-                                    <span class="font-medium-1 black">
+                                <h3 class="font-large-1 black">{{ userProfile.first_name + ' ' + userProfile.last_name }}</h3>
+                                <div class="d-flex">
+                                    <p class="font-medium-1 black">
                                         ( <span v-for="(role, r) in userProfile.roles" :key=r>{{ role + ', ' }} </span> )
-                                    </span>
-                                </h3>
-                                <p class="black" v-if="userProfile.address && userProfile.address.length">
-                                    <i class="fas fa-map-marker-alt"></i>
-                                    <span v-if="userProfile.address[0].country">{{ userProfile.address[0].country.name }} </span>
-                                    <span v-if="userProfile.address[0].state">, {{ userProfile.address[0].state.name }}</span>
-                                    <span v-if="userProfile.address[0].city">, {{ userProfile.address[0].city.name }}</span>
-                                </p>
+                                    </p>
+                                    <p class="ml-2 black" v-if="userProfile.address && userProfile.address.length">
+                                        <i class="fas fa-map-marker-alt"></i>
+                                        <span v-if="userProfile.address[0].country">{{ userProfile.address[0].country.name }} </span>
+                                        <span v-if="userProfile.address[0].state">, {{ userProfile.address[0].state.name }}</span>
+                                        <span v-if="userProfile.address[0].city">, {{ userProfile.address[0].city.name }}</span>
+                                    </p>
+                                </div>
                                 <div>
                                     <!--<button class="btn btn-bg-gradient-x-purple-red btn-glow white" style="margin-left: 10px;"
                                             @click="sendFriendRequest(userProfile.id)">
@@ -137,7 +138,7 @@
                                             <div class="mb-1"><strong>Email: </strong>{{ userProfile.email }}</div>
                                             <div class="mb-1" v-if="userProfile.postal_code"><strong>Postal code: </strong>{{ userProfile.postal_code }}</div>
                                             <div class="mb-1" v-if="userProfile.gender"><strong>Gender: </strong>{{ userProfile.gender }}</div>
-                                            <div class="mb-1" v-if="userProfile.dob"><strong>Dob: </strong>{{ userProfile.dob }}</div>
+                                            <div class="mb-1" v-if="userProfile.dob"><strong>Dob: </strong>{{ userProfile.dob | dateFormatMDY() }}</div>
                                             <div class="mb-1" v-if="userProfile.farmer">
                                                 <div class="mb-1" v-if="userProfile.farmer.farmer_type">
                                                     <strong>Farmer type: </strong> {{ userProfile.farmer.farmer_type }}
@@ -145,8 +146,8 @@
                                                 <div class="mb-1" v-if="userProfile.farmer.acres">
                                                     <strong>Field area: </strong> {{ userProfile.farmer.acres }}, acres
                                                 </div>
-                                                <div class="mb-1" v-if="userProfile.farmer.about">
-                                                    <strong>About </strong>
+                                                <div class="mb-1" v-if="userProfile.about">
+                                                    <strong>About: </strong>
                                                     <div>
                                                         {{ userProfile.about }}
                                                     </div>
@@ -220,8 +221,8 @@
                                                         v-if="roles && (roles.includes('admin') || roles.includes('super admin') || roles.includes('developer') )"
                                                         :src="userProfile.officer.certificate" height="500" width="100%"></iframe>
                                                 </div>
-                                                <div class="mb-1" v-if="userProfile.officer.about">
-                                                    <strong>About </strong>
+                                                <div class="mb-1" v-if="userProfile.about">
+                                                    <strong>About: </strong>
                                                     <div>
                                                         {{ userProfile.about }}
                                                     </div>
@@ -229,8 +230,8 @@
                                             </div>
                                             <div class="mb-1" v-if="userProfile.retailer">
                                                 <div class="mb-1"><strong>Retailer interest: </strong>{{ userProfile.retailer.retailer_interest }}</div>
-                                                <div class="mb-1" v-if="userProfile.retailer.about">
-                                                    <strong>About </strong>
+                                                <div class="mb-1" v-if="userProfile.about">
+                                                    <strong>About: </strong>
                                                     <div>
                                                         {{ userProfile.about }}
                                                     </div>

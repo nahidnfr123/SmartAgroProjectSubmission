@@ -32,5 +32,6 @@ export default new Vuex.Store({
         product,
         cart,
         notification,
+        todo,
     }
 });

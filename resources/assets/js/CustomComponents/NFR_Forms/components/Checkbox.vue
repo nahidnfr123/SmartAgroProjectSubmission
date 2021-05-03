@@ -2,7 +2,7 @@
     <div>
         <label v-if="label" :class="label_class ? label_class : default_label_style">{{ label }}</label>
         <div v-if="type === 'checkbox'" class="rounded-lg py-2" :class="[orientation, error ? 'pl-2 border-red-500 border border-opacity-80' : '']">
-            <label class="flex" :class="orientation !== 'flex'?'mb-2':''">
+            <label class="flex" :class="orientation !== 'flex'?'mb-1':''">
                 <span :class="[Replace_Input_Class ? Replace_Input_Class : 'form-control', Add_Input_Class]">
                     <input
                         :type="type"

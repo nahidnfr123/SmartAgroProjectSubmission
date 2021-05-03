@@ -89,7 +89,7 @@ export default {
                     accessibleTo: ['super admin'],
                 },
                 {
-                    to: {name: 'Activities'}, label: 'Activities', icon: 'fa-file',
+                    to: {name: 'Todo List'}, label: 'Activities', icon: 'fa-file',
                     accessibleTo: ['farmer'],
                 },
                 /*{

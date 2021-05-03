@@ -51,6 +51,8 @@ import FindPeople from "./views/dashboard/Users/FindPeople";
 import AccountBlocked from "./views/AccountBlocked";
 import ContactUs from "./views/ContactUs";
 import About from "./views/About";
+import Todo from "./views/dashboard/todos/Todo";
+import TodoItem from "./views/dashboard/todos/TodoItem";
 
 function requireAuthenticated(to, from, next) {
     const authenticated = store.getters["auth/authenticated"];
@@ -264,6 +266,18 @@ const routes = [
             {
                 path: 'messages/:to_id', name: 'Chat-Conversation', component: Chat, props: true, meta: {hideBread: true}
             },
+            {
+                path: 'todos', name: 'Todo List',
+                //component: Todo,
+                component: Todo,
+            },
+            {
+                path: 'todo-tasks/:date', name: 'Todo Task',
+                //component: TodoItem,
+                component: TodoItem,
+                props: true,
+            },
+
 
             // not done ...
             {
