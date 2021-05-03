@@ -7,6 +7,7 @@ use App\Http\Resources\OrdersResource;
 use App\Http\Resources\ProductResource;
 use App\Http\Resources\RoleResource;
 use App\Http\Resources\UserResource;
+use App\Mail\PurchaseInvoiceInformation;
 use App\Models\Address;
 use App\Models\FarmerDetails;
 use App\Models\OfficerDetails;
@@ -15,10 +16,13 @@ use App\Models\Product;
 use App\Models\RetailerDetails;
 use App\Models\Role;
 use App\Models\User;
+use App\Notifications\Invoice;
+use App\Notifications\UserStatusNotification;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use phpDocumentor\Reflection\Types\Boolean;
 
 class ProductOrderController extends Controller
@@ -36,11 +40,16 @@ class ProductOrderController extends Controller
         $status = request()->input('status');
         $removedOrders = request()->input('removedOrders');
         $sellerId = request()->input('sellerId');
+        $customerId = request()->input('customerId');
         $pinned = request()->input('pinned');
 
         $order_query = Order::query()
             ->orderBy('pinned', 'DESC')
             ->withFilters($query, $status, $removedOrders, $sellerId, $pinned);
+
+        if ($customerId) {
+            $order_query->where('user_id', $customerId);
+        }
 
         if ($removedOrders == "true") {
             $order_query->onlyTrashed();
@@ -82,7 +91,7 @@ class ProductOrderController extends Controller
             } else {
                 return response()->json(['error' => 'Cannot find product.'], 400);
             }
-            $Orders->products()->attach($product['id'], ['quantity' => $product['quantity']]);
+            $Orders->products()->attach($product['id'], ['quantity' => $product['quantity'], 'buying_price' => $product['regular_price']]);
         }
         return response()->json($Orders, 200);
     }
@@ -106,11 +115,24 @@ class ProductOrderController extends Controller
      * @param int $id
      * @return \Illuminate\Http\JsonResponse
      */
-    public function update(Request $request, $id): \Illuminate\Http\JsonResponse
+    public function update(Request $request, $order_id, $product_id): \Illuminate\Http\JsonResponse
     {
-        $order = Order::findOrFail($id);
+        $order = Order::findOrFail($order_id);
         if ($request->status) {
-            $order->order_status = $request->status;
+            $order->products()->updateExistingPivot($product_id, ['individual_order_status' => $request->status]);
+            $counter = 0;
+            foreach ($order->products as $product) {
+                if ($product->pivot->individual_order_status == 'confirmed') {
+                    ++$counter;
+                }
+            }
+            if ($counter == count($order->products)) {
+                $order->order_status = 'confirmed';
+                $user = User::findOrFail($order->user_id);
+                Mail::to($user->email)->send(new PurchaseInvoiceInformation($order));
+            } else {
+                $order->order_status = 'processing';
+            }
             $order->save();
         }
         return (new OrdersResource($order))->response();

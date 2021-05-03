@@ -116,6 +116,7 @@ Route::middleware(['auth:sanctum', 'verified', 'role:developer|super admin|admin
     Route::get('/product/order', [ProductOrderController::class, 'index']);
     Route::delete('/product/order/remove/{id}', [ProductOrderController::class, 'remove']);
     Route::get('/product/order/restore/{id}', [ProductOrderController::class, 'restore']);
+    Route::put('/product/order/{order_id}/{product_id}', [ProductOrderController::class, 'update']);
     Route::apiResource('/product/order', ProductOrderController::class);
 });
 
@@ -143,6 +144,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
 
     Route::get('/roles', [UserController::class, 'getRoles']);
 
+    Route::put('/user/{id}/status/update', [UserController::class, 'updateStatus']);
     Route::get('/search/users', [UserController::class, 'search']);
     Route::get('/search/people', [UserController::class, 'searchPeople']);
     Route::post('/user-details/upload', [UserController::class, 'storeUserDetails']);

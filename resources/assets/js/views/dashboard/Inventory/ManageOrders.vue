@@ -78,7 +78,8 @@
 
                                     <!--                                    <loading v-if="loading" msg="Loading orders ..."/>-->
 
-                                    <table class="table" style="width: 100% !important; font-size: 12px!important;" v-if="allOrders.length">
+                                    <table class="table" style="width: 100% !important; font-size: 12px!important;"
+                                           v-if="allOrders.length && checkRoles()">
                                         <thead class="white" :class="search.removed?'bg-danger':'bg-info'">
                                         <tr>
                                             <th style="max-width: 10px !important;">#</th>
@@ -98,23 +99,40 @@
                                                 <a href="" style="margin-left: 4px" @click.stop.prevent="showDetails(order.id)">{{ order.order_no }}</a>
                                             </th>
                                             <td>
-                                                <template v-if=" productDetailsId == order.id">
-                                                    <div v-if="order.products && order.products.length" v-for="product in order.products" class="mb-1">
-                                                        <img :src="product.first_image" alt="" style="height: 50px !important;" class="rounded">
-                                                        <div>
-                                                            <router-link :to="{name:'View Product',params:{product_slug:product.product_slug}}" target="_blank">
-                                                                <strong>{{ product.product_name }} ({{ product.quantity }})</strong>
-                                                            </router-link>
-                                                        </div>
-                                                        <div>
-                                                            <span><strong>Seller: </strong></span>
-                                                            <span>
+                                                <template v-if="productDetailsId == order.id">
+                                                    <div v-if="order.products && order.products.length" v-for="product in order.products" class="rounded mb-1"
+                                                    :class="[product.individual_order_status == 'canceled'?'bg-danger text-white':'']">
+                                                        <template v-if="!search.sellerId || (search.sellerId && search.sellerId == product.seller.id)">
+                                                            <img :src="product.first_image" alt="" style="height: 50px !important;" class="rounded">
+                                                            <div>
+                                                                <router-link :to="{name:'View Product',params:{product_slug:product.product_slug}}" target="_blank">
+                                                                    <strong>{{ product.product_name }} ({{ product.quantity }})</strong>
+                                                                </router-link>
+                                                            </div>
+                                                            <div>
+                                                                <strong>Status: </strong>
+                                                                <template v-if="search.sellerId && search.sellerId == product.seller.id && product.individual_order_status !== 'confirmed'">
+                                                                    <select name="status" id="status" @change.stop.prevent="updateStatus($event, order.id,  product.id)">
+                                                                        <option value="" disabled></option>
+                                                                        <option value="confirmed" :selected="product.individual_order_status == 'confirmed'?'selected':''">confirm</option>
+                                                                        <option value="pending" :selected="product.individual_order_status == 'pending'?'selected':''">pending</option>
+                                                                        <option value="canceled" :selected="product.individual_order_status == 'canceled'?'selected':''">cancel</option>
+                                                                    </select>
+                                                                </template>
+                                                                <template v-else>
+                                                                    {{ product.individual_order_status }}
+                                                                </template>
+                                                            </div>
+                                                            <div>
+                                                                <span><strong>Seller: </strong></span>
+                                                                <span>
                                                                 <router-link :to="{name: 'View Profile', params:{id:product.seller.id}}" target="_blank"
                                                                              v-if="user && user.id != product.seller.id">{{ product.seller.username }}</router-link>
                                                                 <router-link :to="{name:'Profile'}" target="_blank" v-else>{{ product.seller.username }}</router-link>
                                                             </span>
-                                                        </div>
-                                                        <hr>
+                                                            </div>
+                                                            <hr>
+                                                        </template>
                                                     </div>
                                                 </template>
                                                 <div v-else>{{ order.products.length }} - Products</div>
@@ -127,12 +145,15 @@
                                                         <pending-icon v-if="order.order_status == 'pending'"/>
                                                         <cancel-icon v-if="order.order_status == 'cancel'"/>
                                                     </div>
-                                                    <select name="status" id="status" @change.stop.prevent="updateStatus($event, order.id)">
-                                                        <option value=""></option>
-                                                        <option value="confirmed" :selected="order.order_status == 'confirmed'?'selected':''">confirm</option>
-                                                        <option value="pending" :selected="order.order_status == 'pending'?'selected':''">pending</option>
-                                                        <option value="cancel" :selected="order.order_status == 'cancel'?'selected':''">cancel</option>
-                                                    </select>
+                                                    <div>
+                                                        {{ order.order_status }}
+                                                    </div>
+                                                    <!--                                                    <select name="status" id="status" @change.stop.prevent="updateStatus($event, order.id)" v-if="user.id == 1">
+                                                                                                            <option value=""></option>
+                                                                                                            <option value="confirmed" :selected="order.order_status == 'confirmed'?'selected':''">confirm</option>
+                                                                                                            <option value="pending" :selected="order.order_status == 'pending'?'selected':''">pending</option>
+                                                                                                            <option value="cancel" :selected="order.order_status == 'cancel'?'selected':''">cancel</option>
+                                                                                                        </select>-->
                                                 </div>
                                                 <div v-else class="badge badge-light text-dark">{{ order.order_status }}</div>
                                             </td>
@@ -261,6 +282,7 @@
                                         </strong>
                                     </div>
                                     <hr>
+                                    <div>Ordered By:</div>
                                     <div class="d-flex justify-content-between align-items-center flex-wrap">
                                         <div class="d-flex flex-wrap">
                                             <img :src="viewOrder.customer.avatar" alt="" class="rounded" style="width: 50px; height: 50px; border-radius: 100%; object-position: center center; object-fit: cover;">
@@ -276,7 +298,11 @@
                                             </div>
                                         </div>
                                         <div>
-                                            <button class="btn btn-success"><i class="fas fa-comment" @click.stop.prevent="alert('feature under development.')"></i> Chat</button>
+                                            <router-link class="btn btn-success" :to="{name: 'Chat-Conversation', params:{to_id:viewOrder.customer.id}}"
+                                                         v-if="user.id !== viewOrder.customer.id">
+                                                <i class="fas fa-comment" @click.stop.prevent="alert('feature under development.')"></i>
+                                                Chat
+                                            </router-link>
                                         </div>
                                     </div>
                                 </div>
@@ -317,6 +343,7 @@ export default {
             search: {
                 query: "", // Search query from text box
                 sellerId: "",
+                customerId: "",
                 status: "",
                 pinned: "",
                 removed: false,
@@ -325,6 +352,7 @@ export default {
     },
     activated() {
         //this.checkUserRole();
+        //this.checkSellerHasOrders();
     },
     mounted() {
         this.getOrders();
@@ -345,6 +373,20 @@ export default {
         }),
     },
     methods: {
+        checkRoles() {
+            return true;
+            let roles = this.roles;
+            if (roles.includes('customer') || roles.includes('retailer') || roles.includes('admin') || roles.includes('developer') || roles.includes('super admin')) {
+                console.log('true');
+            }
+        },
+        checkSellerHasOrders() {
+            if (this.roles.includes('farmer')) {
+
+                return true;
+            }
+            return false;
+        },
         clearForm() {
             this.errors = '';
             this.search = {
@@ -363,6 +405,11 @@ export default {
                 } else {
                     this.search.sellerId = '';
                 }
+                if (roles.includes('retailer') || roles.includes('customer')) {
+                    this.search.customerId = this.user.id;
+                } else {
+                    this.search.customerId = '';
+                }
             }
         },
         handleChange(page) {
@@ -375,6 +422,7 @@ export default {
             await axios.get(`api/product/order?query=${this.search.query}` +
                 `&status=${this.search.status}` +
                 `&removedOrders=${this.search.removed}` +
+                `&customerId=${this.search.customerId}` +
                 `&sellerId=${this.search.sellerId}` +
                 `&pinned=${this.search.pinned}` +
                 `&page=${page || this.pagination.current_page}`)
@@ -442,12 +490,12 @@ export default {
                 this.loading = false;
             });
         },
-        async updateStatus(event, order_id) {
+        async updateStatus(event, order_id, product_id) {
             this.$Progress.start();
             let formData = new FormData();
             formData.append("_method", "put");
             formData.append('status', event.target.value);
-            await axios.post(`api/product/order/${order_id}`, formData).then(() => {
+            await axios.post(`api/product/order/${order_id}/${product_id}`, formData).then(() => {
                 this.getOrders(this.pagination.current_page, false);
                 this.$store.dispatch('snackbar/addSnack', {color: 'success', msg: 'Order status updated.', snakbarType: 'Success'}, {root: true});
             }).catch(() => {

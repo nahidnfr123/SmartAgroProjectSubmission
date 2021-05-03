@@ -49,6 +49,8 @@ import OrderSummary from "./views/market/OrderSummary";
 import Chat from "./views/dashboard/chat/Chat";
 import FindPeople from "./views/dashboard/Users/FindPeople";
 import AccountBlocked from "./views/AccountBlocked";
+import ContactUs from "./views/ContactUs";
+import About from "./views/About";
 
 function requireAuthenticated(to, from, next) {
     const authenticated = store.getters["auth/authenticated"];
@@ -146,6 +148,12 @@ const routes = [
     },
     {
         path: '/login', name: 'Login', component: Login, beforeEnter: preventAuthenticated
+    },
+    {
+        path: '/contact', name: 'Contact', component: ContactUs,
+    },
+    {
+        path: '/about', name: 'About', component: About,
     },
     {
         path: '/account_blocked', name: 'AccountBlocked', component: AccountBlocked,

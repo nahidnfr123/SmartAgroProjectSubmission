@@ -194,7 +194,7 @@ class ProductTableSeeder extends Seeder
         $product->regular_price = 35;
         $product->retail_price = 30;
         $product->minimum_order_amount = 20;
-        $product->seller_id = 1;
+        $product->seller_id = 10;
         $product->save();
         $product->productCategory()->attach(17);
 
@@ -219,7 +219,7 @@ class ProductTableSeeder extends Seeder
         $product->regular_price = 60;
         $product->retail_price = 50;
         $product->minimum_order_amount = 5;
-        $product->seller_id = 1;
+        $product->seller_id = 11;
         $product->save();
         $product->productCategory()->attach(18);
 
@@ -242,7 +242,7 @@ class ProductTableSeeder extends Seeder
         $product->regular_price = 60;
         $product->retail_price = 50;
         $product->minimum_order_amount = 5;
-        $product->seller_id = 1;
+        $product->seller_id = 10;
         $product->save();
         $product->productCategory()->attach(18);
 
@@ -290,7 +290,7 @@ class ProductTableSeeder extends Seeder
         $product->regular_price = 60;
         $product->retail_price = 50;
         $product->minimum_order_amount = 5;
-        $product->seller_id = 1;
+        $product->seller_id = 11;
         $product->save();
         $product->productCategory()->attach(19);
 
@@ -313,7 +313,7 @@ class ProductTableSeeder extends Seeder
         $product->regular_price = 60;
         $product->retail_price = 50;
         $product->minimum_order_amount = 5;
-        $product->seller_id = 1;
+        $product->seller_id = 10;
         $product->save();
         $product->productCategory()->attach(16);
 

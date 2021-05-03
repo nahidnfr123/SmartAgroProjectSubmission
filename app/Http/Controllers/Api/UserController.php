@@ -8,6 +8,7 @@ use App\Http\Resources\RoleResource;
 use App\Http\Resources\UserResource;
 use App\Http\Resources\UserResourceWithProducts;
 use App\Http\Resources\UserWithProductsResource;
+use App\Mail\Notification;
 use App\Models\Address;
 use App\Models\FarmerDetails;
 use App\Models\OfficerDetails;
@@ -15,12 +16,14 @@ use App\Models\Product;
 use App\Models\RetailerDetails;
 use App\Models\Role;
 use App\Models\User;
+use App\Notifications\UserStatusNotification;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
@@ -282,6 +285,21 @@ class UserController extends Controller
     }
 
 
+    public function updateStatus(Request $request, $id)
+    {
+        $user = User::findOrFail($id);
+        if ($user->status == 'active') {
+            $user->status = 'blocked';
+        } else {
+            $user->status = 'active';
+        }
+        $user->save();
+        $user->notify(new UserStatusNotification($user));
+        //Mail::to($user->email)->send(new Notification());
+        return (new UserResource($user))->response();
+    }
+
+
     public function uploadAvatar(Request $request): \Illuminate\Http\JsonResponse
     {
         $user = auth()->user();
@@ -338,7 +356,7 @@ class UserController extends Controller
                 $operator = '=';
             } elseif ($status === 'pending') { // If user is not_Verified then STATUS = 0 and VERIFIED_AT = null
                 $status = 'pending';
-                $operator = '=';
+                $operator = '!=';
             }
             $Users->where('status', '=', $status)
                 ->where('email_verified_at', $operator, null);

@@ -49,25 +49,25 @@
                         <div class="card">
                             <div class="card-header pb-0">
                                 <div class="card-title-wrap bar-primary">
-<!--                                    <div class="card-title">Work History</div>
-                                    <hr>-->
+                                    <!--                                    <div class="card-title">Work History</div>
+                                                                        <hr>-->
                                 </div>
                             </div>
                             <div class="card-content">
                                 <div class="card-body p-0 pt-0 pb-1">
-<!--                                    <ul>
-                                        <li><strong>99%</strong>Job Success</li>
-                                        <li>
-                                            <strong>4.9 stars </strong>
-                                            <i class="fas fa-star yellow darken-2"></i>
-                                            <i class="fas fa-star yellow darken-2"></i>
-                                            <i class="fas fa-star yellow darken-2"></i>
-                                            <i class="fas fa-star yellow darken-2"></i>
-                                            <i class="fas fa-star yellow darken-2"></i>
-                                        </li>
-                                        <li><strong>1022</strong> Hours Worked</li>
-                                        <li><strong>26</strong> Jobs</li>
-                                    </ul>-->
+                                    <!--                                    <ul>
+                                                                            <li><strong>99%</strong>Job Success</li>
+                                                                            <li>
+                                                                                <strong>4.9 stars </strong>
+                                                                                <i class="fas fa-star yellow darken-2"></i>
+                                                                                <i class="fas fa-star yellow darken-2"></i>
+                                                                                <i class="fas fa-star yellow darken-2"></i>
+                                                                                <i class="fas fa-star yellow darken-2"></i>
+                                                                                <i class="fas fa-star yellow darken-2"></i>
+                                                                            </li>
+                                                                            <li><strong>1022</strong> Hours Worked</li>
+                                                                            <li><strong>26</strong> Jobs</li>
+                                                                        </ul>-->
                                 </div>
                             </div>
                         </div>
@@ -214,6 +214,12 @@
                                             <div class="mb-1" v-if="userProfile.officer">
                                                 <div class="mb-1"><strong>Office name: </strong>{{ userProfile.officer.office_name }}</div>
                                                 <div class="mb-1"><strong>Job title: </strong>{{ userProfile.officer.job_title }}</div>
+                                                <div class="mb-1">
+                                                    <strong class="mb-1">Certificate: </strong>
+                                                    <iframe
+                                                        v-if="roles && (roles.includes('admin') || roles.includes('super admin') || roles.includes('developer') )"
+                                                        :src="userProfile.officer.certificate" height="500" width="100%"></iframe>
+                                                </div>
                                                 <div class="mb-1" v-if="userProfile.officer.about">
                                                     <strong>About </strong>
                                                     <div>
@@ -269,9 +275,10 @@ export default {
     activated() {
         this.getUserData(this.$route.params.id)
     },
-    computed:{
+    computed: {
         ...mapGetters({
             loggedInUser: 'auth/user',
+            roles: 'auth/roles'
         })
     },
     methods: {

@@ -20,7 +20,7 @@ class CreateOrdersTable extends Migration
             $table->foreignId('address_id')->nullable()->references('id')->on('addresses');
             $table->integer('total_price')->default(0);
             $table->string('payment_method')->default('cash on delivery');
-            $table->string('order_status')->default('pending');  //confirmed , pending , canceled,
+            $table->enum("order_status", ["confirmed", "pending", "canceled", 'processing'])->default('pending');
             $table->string('payment_status')->default('pending');  //paid , pending , not paid,
             $table->boolean('pinned')->default(0);
             $table->timestamps();

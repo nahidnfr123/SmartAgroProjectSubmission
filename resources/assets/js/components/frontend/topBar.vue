@@ -24,7 +24,7 @@
                     <li>
                         <a :href="BaseUrl+'dashboard/@'+user.username+'/messages'">
                             <i class="fas fa-comment-alt"></i> Message
-                            <span class="MsgCount">(20)</span>
+<!--                            <span class="MsgCount">(20)</span>-->
                         </a>
                     </li>
                     <li>

@@ -37,7 +37,7 @@ class Order extends Model
     public function products(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
         return $this->belongsToMany(Product::class)
-            ->withPivot('quantity');
+            ->withPivot(['quantity', 'buying_price', 'individual_order_status']);
     }
 
     public function scopeWithFilters($query, $searchQuery, $status, $removedOrders, $sellerId, $pinned)

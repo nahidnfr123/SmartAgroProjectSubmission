@@ -111,12 +111,12 @@ export default {
                 },
                 /*{to: {name: 'Loan'}, label: 'Loan', icon: '', accessibleTo: ['farmer'],},*/
                 /*{to: {name: 'Disease Center'}, label: 'Disease Center', icon: 'far fa-bell', accessibleTo: ['farmer'],},*/
-                {to: {name: 'Help'}, label: 'Help', icon: 'fas fa-question-circle'},
+                /*{to: {name: 'Help'}, label: 'Help', icon: 'fas fa-question-circle'},
                 {to: {name: 'Notification'}, label: 'Notifications', icon: 'far fa-bell'},
                 {
                     to: {name: 'Settings'}, label: 'Settings', icon: 'fas fa-cogs',
                     accessibleTo: ['developer', 'super admin', 'admin'],
-                },
+                },*/
             ],
         }
     },

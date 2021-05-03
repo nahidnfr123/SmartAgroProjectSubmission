@@ -18,6 +18,8 @@ class CreateOrderProductTable extends Migration
             $table->foreignId('order_id')->constrained()->onDelete('cascade');
             $table->foreignId('product_id')->constrained()->onDelete('cascade');
             $table->integer('quantity')->default(1);
+            $table->integer('buying_price')->default(0);
+            $table->enum("individual_order_status", ["confirmed", "pending", "canceled"])->default('pending');
             $table->timestamps();
         });
     }

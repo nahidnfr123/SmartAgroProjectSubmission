@@ -114,7 +114,11 @@
                                             <td>{{ user.username }}</td>
                                             <td>{{ user.email }}</td>
                                             <td>{{ user.mobile_number }}</td>
-                                            <td>{{ user.status }}</td>
+                                            <td>
+                                                <div class="text-center" :class="[user.status == 'blocked'? 'bg-danger' : user.status == 'pending'?'bg-warning':'bg-success']">
+                                                    <strong>{{ user.status }}</strong>
+                                                </div>
+                                            </td>
                                             <td>
                                                 <div v-for="role in user.roles">
                                                     {{ role }},
@@ -130,7 +134,15 @@
                                                         <router-link :to="{name: 'View Profile', params:{id:user.id}}" class="dropdown-item">
                                                             <i class="fas fa-eye"></i> View profile
                                                         </router-link>
-                                                        <template v-if="user.status === 'active'">
+                                                        <a class="dropdown-item" href="#" @click.stop.prevent="changeStatus(user.id)" v-if="user.status != 'active'">
+                                                            <template v-if="working"><div class="spinner-border spinner-border-sm" role="status" aria-hidden="true" style="margin-top: 1px;"/></template>
+                                                             <i class="fas fa-user-check"></i> Active
+                                                        </a>
+                                                        <a class="dropdown-item" href="#" @click.stop.prevent="changeStatus(user.id)" v-if="user.status == 'active'">
+                                                            <template v-if="working"><div class="spinner-border spinner-border-sm" role="status" aria-hidden="true" style="margin-top: 1px;"/></template>
+                                                            <i class="fas fa-user-times"></i> Block
+                                                        </a>
+                                                        <template v-if="loggedInUser.status === 'active'">
                                                             <router-link :to="{name: 'Chat-Conversation', params:{to_id:user.id}}" class="dropdown-item">
                                                                 <i class="fas fa-comment"></i> Send message
                                                             </router-link>
@@ -152,7 +164,7 @@
                                     </table>
                                     <div v-else>
                                         <div v-if="!processing" class="alert alert-info text-center">
-                                            No user found in trash.
+                                            No user found.
                                         </div>
                                     </div>
 
@@ -197,7 +209,7 @@
 </template>
 
 <script>
-import mapActions from "vuex";
+import mapActions, {mapGetters} from "vuex";
 import Pagination from "../../../components/pagination";
 
 export default {
@@ -206,6 +218,7 @@ export default {
     data() {
         return {
             allUser: [],
+            working: false,
             showingDeletedUsers: false,
             processing: false,
             errors: [],
@@ -238,6 +251,11 @@ export default {
             status == '' && this.searchRole == '' && this.searchQuery == '' && this.showingDeletedUsers == false ?
                 this.getAllUser() : this.search();
         },
+    },
+    computed: {
+        ...mapGetters({
+            loggedInUser: 'auth/user',
+        })
     },
     methods: {
         clearForm() {
@@ -361,6 +379,22 @@ export default {
             await axios.get('api/roles')
                 .then(response => this.roles = response.data.data)
                 .catch(errors => this.errors = errors.response.data.message);
+        },
+        async changeStatus(userId) {
+            this.working = true;
+            let formData = new FormData();
+            formData.append('_method', 'PUT')
+            await axios.post(`api/user/${userId}/status/update`, formData)
+                .then(response => {
+                    if (response.data.data && response.data.data) {
+                        this.$store.dispatch('snackbar/addSnack', {color: 'success', msg: 'User status updated.', snakbarType: 'Success'}, {root: true});
+                        this.getAllUser();
+                    }
+                })
+                .catch(errors => this.errors = errors.response.data.message)
+                .finally(() => {
+                    this.working = false;
+                });
         },
     }
 }

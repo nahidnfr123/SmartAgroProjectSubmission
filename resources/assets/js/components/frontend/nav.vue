@@ -84,9 +84,9 @@ export default {
                     ]
                 },
                 {to: '/weather', label: 'Weather'},
-                {to: '/agriculture-materials', label: 'Agro materials'},
-                {to: '/about', label: 'About'},
+                /*{to: '/agriculture-materials', label: 'Agro materials'},*/
                 {to: '/contact', label: 'Contact'},
+                {to: '/about', label: 'About'},
             ],
         }
     },
