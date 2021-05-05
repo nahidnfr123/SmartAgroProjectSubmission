@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import {mapGetters, mapActions} from 'vuex';
+import {mapGetters, mapActions, mapState} from 'vuex';
 import dayjs from "dayjs";
 import Snackbar from "../CustomComponents/Snackbar/components/Snackbar";
 
@@ -32,7 +32,29 @@ export default {
                 date: ''
             },
             isDashboard: false,
+            onlineUsers: [],
         }
+    },
+    computed: {
+        ...mapGetters({
+            authenticated: 'auth/authenticated',
+            user: 'auth/user',
+            roles: 'auth/roles',
+        }),
+        ...mapState({
+            stateOnlineUser: 'user_state/onlineUsers',
+        })
+    },
+    updated() {
+        this.setUserOnline()
+    },
+    mounted() {
+        this.setUserOnline();
+        this.$Progress.finish();
+        this.currentDateTime();
+        this.checkPath();
+        this.getUserLocation();
+        this.checkSurvey();
     },
     methods: {
         checkPath() {
@@ -44,7 +66,27 @@ export default {
         ...mapActions({
             logoutAction: 'auth/logout',
             getLocationData: 'weather/getLocationData',
+            //getOnlineUsers: 'user_state/getOnlineUsers',
         }),
+        async setUserOnline() {
+            if (this.user != null) {
+                Echo.join('online')
+                    .here((users) => {
+                        this.onlineUsers = users;
+                        return this.$store.commit('user_state/SET_USER_ONLINE', this.onlineUsers, {root: true});
+                    })
+                    .joining((user) => {
+                        this.onlineUsers.push(user);
+                        return this.$store.commit('user_state/SET_USER_ONLINE', this.onlineUsers, {root: true});
+                    })
+                    .leaving((user) => {
+                        this.onlineUsers = this.onlineUsers.filter((u) => {
+                            return u != user;
+                        });
+                        return this.$store.commit('user_state/SET_USER_ONLINE', this.onlineUsers, {root: true});
+                    });
+            }
+        },
         async logout() {
             await this.logoutAction();
             await this.$router.replace({name: 'Login'});
@@ -71,20 +113,6 @@ export default {
             }
         },
 
-    },
-    computed: {
-        ...mapGetters({
-            authenticated: 'auth/authenticated',
-            user: 'auth/user',
-            roles: 'auth/roles',
-        }),
-    },
-    mounted() {
-        this.$Progress.finish();
-        this.currentDateTime();
-        this.checkPath();
-        this.getUserLocation();
-        this.checkSurvey();
     },
     created() {
         // **** Progressbar Start *** //

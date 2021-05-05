@@ -37,7 +37,7 @@ class Order extends Model
     public function products(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
         return $this->belongsToMany(Product::class)
-            ->withPivot(['quantity', 'buying_price', 'individual_order_status']);
+            ->withPivot(['quantity', 'buying_price', 'individual_order_status', 'seen']);
     }
 
     public function scopeWithFilters($query, $searchQuery, $status, $removedOrders, $sellerId, $pinned)
@@ -70,6 +70,21 @@ class Order extends Model
                     $q->where('seller_id', $sellerId);
                 });
             });
+
+        /*return $query->when(count(request()->input('categories', [])), function ($query) {
+            $query->whereIn('category_id', request()->input('categories'));
+        });*/
+
+    }
+
+    public function scopeWithNewOrderFilters($query, $sellerId, $seen)
+    {
+        return $query->when($sellerId, function ($query) use ($sellerId) {
+            $query->whereHas('products', function ($q) use ($sellerId) {
+                $q->where('seller_id', $sellerId);
+                $q->where('seen', 0);
+            });
+        });
 
         /*return $query->when(count(request()->input('categories', [])), function ($query) {
             $query->whereIn('category_id', request()->input('categories'));

@@ -117,7 +117,9 @@ Route::middleware(['auth:sanctum', 'verified', 'role:developer|super admin|admin
     Route::get('/product/order', [ProductOrderController::class, 'index']);
     Route::delete('/product/order/remove/{id}', [ProductOrderController::class, 'remove']);
     Route::get('/product/order/restore/{id}', [ProductOrderController::class, 'restore']);
+    Route::get('/orders/show-new-orders', [ProductOrderController::class, 'showNewOrders']);
     Route::put('/product/order/{order_id}/{product_id}', [ProductOrderController::class, 'update']);
+    Route::put('/product/order/update/seen/{order_id}', [ProductOrderController::class, 'updateSeen']);
     Route::apiResource('/product/order', ProductOrderController::class);
 });
 

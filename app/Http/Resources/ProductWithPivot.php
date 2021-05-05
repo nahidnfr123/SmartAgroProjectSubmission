@@ -38,6 +38,7 @@ class ProductWithPivot extends JsonResource
             'retail_price' => $this->retail_price,
             'minimum_order_amount' => $this->minimum_order_amount,
             'currency' => $this->currency,
+            'seen' => $this->pivot->seen ?: 0,
             'quantity' => $this->pivot->quantity && $this->pivot->quantity > 0 ? $this->pivot->quantity : null,
             'individual_order_status' => $this->pivot->individual_order_status ? $this->pivot->individual_order_status : null,
             'buying_price' => $this->pivot->buying_price ? $this->pivot->buying_price : null,

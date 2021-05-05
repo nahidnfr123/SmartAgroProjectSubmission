@@ -95,8 +95,10 @@
                                 <h2><span>Let Us</span> Tell You Our Story</h2>
                                 <img src="/frontend-assets/img/core-img/decor.png" alt="">
                             </div>
-                            <p>Lorem ipsum dolor sit amet, consectetu adipiscing elit. Etiam nunc elit, pretium atlanta urna veloci, fermentum malesuda mina. Donec auctor nislec neque sagittis, sit amet dapibus pellentesque donal feugiat. Nulla mollis magna non
-                                sanaliquet, volutpat do zutum, ultrices consectetur, ultrices at purus.</p>
+                            <p>The story of Smart agro begins in 2020, when Nahid Ferdous (our CEO and Co-founder) saw technology making things easier for the world, but not back home on the farm.
+                            </p>
+                            <p>
+                                The software tools available to farmers at the time were clumsy, difficult to use, and expensive. So over the next few years, the FarmLogs team started building simple software that would help farmers run more efficient operations.</p>
                             <a href="#" class="btn famie-btn mt-30">Read More</a>
                         </div>
                     </div>

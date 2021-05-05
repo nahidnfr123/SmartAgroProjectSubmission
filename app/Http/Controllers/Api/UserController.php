@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\ProductResource;
 use App\Http\Resources\RoleResource;
 use App\Http\Resources\UserResource;
-use App\Http\Resources\UserResourceWithProducts;
 use App\Http\Resources\UserWithProductsResource;
 use App\Mail\Notification;
 use App\Models\Address;

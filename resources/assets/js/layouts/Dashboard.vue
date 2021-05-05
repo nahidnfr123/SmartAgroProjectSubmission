@@ -38,6 +38,7 @@ import Customizer from "../components/dashboard/customizer";
 import {mapGetters} from "vuex";
 
 export default {
+    name:'Main_Dashboard',
     components: {
         Customizer,
         Breadcrum,

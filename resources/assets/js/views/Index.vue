@@ -376,7 +376,7 @@
 
 
         <!-- ##### News Area Start ##### -->
-        <section class="news-area bg-gray section-padding-100-0">
+        <section class="news-area bg-gray section-padding-100-0 mb-4">
             <div class="container">
                 <div class="row" v-if="blogPosts && Object.keys(blogPosts).length">
 

@@ -59,8 +59,6 @@ class ProductOrderController extends Controller
 
         //abort_unless((bool)Gate::authorize('view_category'), 403);
         return (OrdersResource::collection($orders))->response();
-
-
     }
 
     /**
@@ -211,6 +209,37 @@ class ProductOrderController extends Controller
             return response()->json(['error' => "Failed to delete order!"], 500);
         }
         return (new OrdersResource($order))->response();
+    }
+
+    public function updateSeen(Request $request, $order_id): \Illuminate\Http\JsonResponse
+    {
+        $loggedInUserId = \auth()->id();
+        $order = Order::findOrFail($order_id);
+        $products = $order->products(function ($q) use ($loggedInUserId) {
+            $q->where('seller_id', $loggedInUserId);
+        })->get();
+        foreach ($products as $product) {
+            if ($product->seller_id == $loggedInUserId) {
+                $order->products()->updateExistingPivot($product->id, ['seen' => 1]);
+            }
+        }
+        return (new OrdersResource($order))->response();
+    }
+
+    public function showNewOrders(): \Illuminate\Http\JsonResponse
+    {
+        $sellerId = request()->input('sellerId');
+        $seen = request()->input('seen');
+        $user = \auth()->user();
+
+        $order_query = Order::query()->with('products')
+            ->orderBy('pinned', 'DESC')
+            ->withNewOrderFilters($sellerId, $seen);
+
+        $orders = $order_query->latest()->paginate(10);
+
+        //abort_unless((bool)Gate::authorize('view_category'), 403);
+        return (OrdersResource::collection($orders))->response();
     }
 
 

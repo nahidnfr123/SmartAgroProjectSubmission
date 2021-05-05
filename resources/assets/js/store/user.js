@@ -33,10 +33,14 @@ export default {
     state: {
         userDetails: null,
         error: null,
+        onlineUsers: [],
     },
     getters: {
         userDetails(state) {
             return state.userDetails;
+        },
+        onlineUsers(state) {
+            return state.onlineUsers;
         },
         userDetailsErrors(state) {
             return state.error;
@@ -45,6 +49,9 @@ export default {
     mutations: {
         SET_USER_DETAILS(state, value) {
             return state.userDetails = value;
+        },
+        SET_USER_ONLINE(state, value) {
+            return state.onlineUsers = value;
         },
         SET_ERROR(state, value) {
             return state.error = value
@@ -133,6 +140,9 @@ export default {
                 }).catch(function (error) {
                     generateErrors({commit, dispatch}, error, err, "Error uploading profile image.", false);
                 });
+        },
+        getOnlineUsers({commit}, user) {
+            commit('SET_USER_ONLINE', user, {root: true});
         }
 
 

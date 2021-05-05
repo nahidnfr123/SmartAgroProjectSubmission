@@ -147,6 +147,7 @@ export default {
                     commit('SET_USER', response.data.user);
                     commit('SET_ROLES', response.data.roles);
                     commit('SET_PERMISSIONS', response.data.permissions);
+                    //dispatch('changeUserStatus');
                 }else{
                     dispatch('logout');
                     router.push({name: 'AccountBlocked'});
@@ -195,6 +196,10 @@ export default {
                 commit('SET_ROLES', null);
             });
         },*/
+
+        changeUserStatus({dispatch, commit}){
+            //let onlineUsers = dispatch('');
+        }
 
     }
 }

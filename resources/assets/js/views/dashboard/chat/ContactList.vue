@@ -20,7 +20,7 @@
                                 <div class="media-left pr-1">
                     <span class="avatar avatar-md">
                         <img class="media-object rounded-circle" :src="contact.avatar" alt=""
-                                                        style="width: 40px; height: 40px; object-fit: cover; object-position: center center;">
+                             style="width: 40px; height: 40px; object-fit: cover; object-position: center center;">
                          <i class="online-status" v-if="checkOnlineUsers(contact.id)"></i>
                     </span>
                                 </div>
@@ -47,6 +47,8 @@
 </template>
 
 <script>
+import {mapGetters} from "vuex";
+
 export default {
     name: "ContactList",
     props: {
@@ -58,11 +60,10 @@ export default {
             type: [Object, Array],
             default: []
         },
-        onlineUsers: {
+        /*onlineUsers: {
             type: [Object, Array],
             default: []
-        },
-
+        },*/
     },
     data() {
         return {}
@@ -73,6 +74,9 @@ export default {
         },
     },
     computed: {
+        ...mapGetters({
+            onlineUsers: 'user_state/onlineUsers'
+        }),
         sortedContacts() {
             //return this.contacts;
             return _.sortBy(this.contacts, [(contact) => {
@@ -87,10 +91,11 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.avatar{
+.avatar {
     position: relative;
 }
-.avatar .online-status{
+
+.avatar .online-status {
     position: absolute;
     bottom: -2px;
     right: -2px;

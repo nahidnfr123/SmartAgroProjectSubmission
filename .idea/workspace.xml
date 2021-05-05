@@ -2,36 +2,24 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="46b851a5-783b-4b26-96ce-1bce596dde7e" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/app/Http/Controllers/Api/TodosController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Http/Resources/TodoCollection.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Http/Resources/TodoResource.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Http/Resources/TodoTaskResource.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Models/Todo.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Models/TodoTask.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/TodoItem.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/Todos.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/assets/js/views/dashboard/todos/Card.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/assets/js/views/dashboard/todos/Item.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/assets/js/views/dashboard/todos/Todo.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/assets/js/views/dashboard/todos/TodoFormModal.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/assets/js/views/dashboard/todos/TodoItem.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/03-Smart-Agro-Camelion.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/03-Smart-Agro-Camelion.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Api/ProductOrderController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Api/ProductOrderController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Api/UserController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Api/UserController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Resources/UserResource.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Resources/UserResource.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/User.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2021_03_06_194752_create_farmer_details_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2021_03_06_194752_create_farmer_details_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2021_03_06_194805_create_retailer_details_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2021_03_06_194805_create_retailer_details_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2021_03_06_200505_create_officer_details_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2021_03_06_200505_create_officer_details_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Resources/ProductWithPivot.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Resources/ProductWithPivot.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/Order.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Order.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2021_03_26_194534_create_order_product_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2021_03_26_194534_create_order_product_table.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/dist/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/dist/js/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/assets/js/CustomComponents/NFR_Forms/components/Checkbox.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/assets/js/CustomComponents/NFR_Forms/components/Checkbox.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/assets/js/components/dashboard/asideBar.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/assets/js/components/dashboard/asideBar.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/assets/js/routes.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/assets/js/routes.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/assets/js/store/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/assets/js/store/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/assets/js/store/todo.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/assets/js/store/todo.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/assets/js/views/dashboard/Users/Profile.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/assets/js/views/dashboard/Users/Profile.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/assets/js/views/dashboard/Users/UpdateProfileModal.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/assets/js/views/dashboard/Users/UpdateProfileModal.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/assets/js/views/dashboard/Users/ViewProfile.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/assets/js/views/dashboard/Users/ViewProfile.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/assets/js/layouts/AppLayout.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/assets/js/layouts/AppLayout.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/assets/js/layouts/Dashboard.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/assets/js/layouts/Dashboard.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/assets/js/store/auth.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/assets/js/store/auth.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/assets/js/store/user.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/assets/js/store/user.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/assets/js/views/About.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/assets/js/views/About.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/assets/js/views/Index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/assets/js/views/Index.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/assets/js/views/dashboard/Index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/assets/js/views/dashboard/Index.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/assets/js/views/dashboard/Inventory/ManageOrders.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/assets/js/views/dashboard/Inventory/ManageOrders.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/assets/js/views/dashboard/chat/ContactList.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/assets/js/views/dashboard/chat/ContactList.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/assets/js/views/dashboard/todos/TodoItem.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/assets/js/views/dashboard/todos/TodoItem.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/assets/js/views/market/Market.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/assets/js/views/market/Market.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/api.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -52,6 +40,14 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
   </component>
   <component name="PhpWorkspaceProjectConfiguration">
     <include_path>
@@ -200,6 +196,7 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/resources/assets/js/views/dashboard" />
     <property name="nodejs_package_manager_path" value="npm" />
+    <property name="settings.editor.selected.configurable" value="preferences.editor.code.editing" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
@@ -229,6 +226,8 @@
       <workItem from="1620002995718" duration="13804000" />
       <workItem from="1620017138769" duration="13776000" />
       <workItem from="1620044192372" duration="18728000" />
+      <workItem from="1620133618647" duration="17183000" />
+      <workItem from="1620194902249" duration="33723000" />
     </task>
     <servers />
   </component>

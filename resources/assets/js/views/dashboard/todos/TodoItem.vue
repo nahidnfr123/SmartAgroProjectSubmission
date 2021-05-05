@@ -9,7 +9,9 @@
                         <h4 class="card-title">Manage Tasks</h4>
                         <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
                         <div class="heading-elements">
-
+                            <div class="pull-right">
+                                <button class="btn btn-sm btn-success" @click="$router.back()">Back</button>
+                            </div>
                         </div>
                     </div>
                     <div class="card-content collapse show">
@@ -41,27 +43,27 @@
                                                     </h5>
 
 
-                                                    <div id="todoMenu" class="relative" v-if="todoMenuState.todoId === null || todoMenuState.todoId == td.id">
+                                                    <div id="todoMenu" class="position-relative" v-if="todoMenuState.todoId === null || todoMenuState.todoId == td.id">
                                                         <div class="d-flex cursor-pointer rounded"
                                                              :class="{'bg-gray-200 dark:bg-gray-800':todoMenuState.todoId == td.id}"
                                                              @click="showTodoMenu(td)">
-                                                            <span class="h-15 w-15 rounded-full bg-dark"></span>
-                                                            <span class="h-15 w-15 rounded-full bg-dark"></span>
-                                                            <span class="h-15 w-15 rounded-full bg-dark"></span>
+                                                            <span class="h-10 w-10 rounded bg-dark"></span>
+                                                            <span class="h-10 w-10 rounded bg-dark"></span>
+                                                            <span class="h-10 w-10 rounded bg-dark"></span>
                                                         </div>
 
-                                                        <div class="position-absolute text-center rounded p-2"
+                                                        <div class="position-absolute text-center rounded p-1 bg-white shadow" style="z-index: 99; width: 200px; top:12px; right: 0;"
                                                              v-if="todoMenuState.showMenu && todoMenuState.todoId == td.id">
                                                             <!-- Edit button -->
                                                             <div v-if="restriction.canMoveToOtherDate && dayOptions">
-                                                                <button class="btn btn-sm btn-secondary"
+                                                                <button class="btn btn-sm btn-secondary col mb-1"
                                                                         title="Delete Todo"
                                                                         v-for="dayOption in dayOptions"
                                                                         @click="moveTodoSubmit(dayOption, td.id)">
                                                                     <span>Move to: <strong>{{ dayOption }}</strong></span>
                                                                 </button>
                                                             </div>
-                                                            <button class="btn btn-sm btn-primary"
+                                                            <button class="btn btn-sm btn-primary col mb-1"
                                                                     title="Delete Todo"
                                                                     v-if="restriction.canEdit"
                                                                     @click="editTodoShowModal(td)">
@@ -72,7 +74,7 @@
                                                                 </svg>
                                                             </button>
                                                             <!-- Delete button -->
-                                                            <button class="btn btn-sm btn-danger"
+                                                            <button class="btn btn-sm btn-danger col"
                                                                     title="Delete Todo"
                                                                     @click="deleteTodoSubmit(td)">
                                                                 <span>Delete</span>
@@ -120,7 +122,8 @@
                                                                             @click.prevent="copyToClipboard(task.title)">Copy Text
                                                                         </li>
                                                                         <li class="border-b-2 border-red-500 border-opacity-60 hover:bg-gray-300 dark:hover:bg-gray-700"
-                                                                            @click.prevent="editTaskShowModal(task, td.date)">Edit
+                                                                            @click.prevent="editTaskShowModal(task, td.date)"
+                                                                            v-if="restriction.canEdit">Edit
                                                                         </li>
                                                                         <li class="hover:bg-gray-300 dark:hover:bg-gray-700"
                                                                             @click.prevent="deleteTaskSubmit(task)">Delete
@@ -191,12 +194,12 @@
                                                                          :style="'animation-delay:'+ 300 * taskIndex+'ms'"
                                                                          @click.prevent="showTaskMenu(task.id)"></div>
 
-                                                                    <ul class="taskMenuItem text-xs bg-white">
+                                                                    <ul class="taskMenuItem text-xs bg-white" style="list-style: none; margin: 0; padding: 0;">
                                                                         <li class="border-b-2 border-red-500 border-opacity-60 hover:bg-gray-300 dark:hover:bg-gray-700"
                                                                             @click.prevent="copyToClipboard(task.title)">Copy Text
                                                                         </li>
                                                                         <li class="border-b-2 border-red-500 border-opacity-60 hover:bg-gray-300 dark:hover:bg-gray-700"
-                                                                            @click.prevent="editTaskShowModal(task, td.date)">Edit
+                                                                            @click.prevent="editTaskShowModal(task, td.date)" v-if="restriction.canEdit">Edit
                                                                         </li>
                                                                         <li class="hover:bg-gray-300 dark:hover:bg-gray-700"
                                                                             @click.prevent="deleteTaskSubmit(task)">Delete
@@ -232,12 +235,12 @@
                                                                          :style="'animation-delay:'+ 300 * taskIndex+'ms'"
                                                                          @click.prevent="showTaskMenu(task.id)"></div>
 
-                                                                    <ul class="taskMenuItem text-xs bg-white">
+                                                                    <ul class="taskMenuItem text-xs bg-white" style="list-style: none; margin: 0; padding: 0;">
                                                                         <li class="border-b-2 border-red-500 border-opacity-60 hover:bg-gray-300 dark:hover:bg-gray-700"
                                                                             @click.prevent="copyToClipboard(task.title)">Copy Text
                                                                         </li>
                                                                         <li class="border-b-2 border-red-500 border-opacity-60 hover:bg-gray-300 dark:hover:bg-gray-700"
-                                                                            @click.prevent="editTaskShowModal(task, td.date)">Edit
+                                                                            @click.prevent="editTaskShowModal(task, td.date)" v-if="restriction.canEdit">Edit
                                                                         </li>
                                                                         <li class="hover:bg-gray-300 dark:hover:bg-gray-700"
                                                                             @click.prevent="deleteTaskSubmit(task)">Delete
@@ -259,7 +262,6 @@
                                         </div>
                                     </div>
                                 </div>
-
 
 
                             </div>
@@ -321,9 +323,12 @@ export default {
             getErrors: state => state.todo.error
         }),
     },
-    mounted() {
+    activated() {
+        this.date = this.$route.params.date;
         this.getTodosForDate();
         this.checkDate(this.date);
+    },
+    mounted() {
     },
     created() {
         const escapeHandlerTodo = (e) => {
@@ -580,22 +585,27 @@ export default {
 
 .taskMenuBlock.taskMenuExpand {
     padding-top: 1px;
-    height: 114px;
+    height: 138px;
     width: 100px;
     border-radius: 6px;
     overflow: auto;
 }
-.h-15{
-    height: 15px;
+
+.h-10 {
+    height: 10px;
+    margin: 1px;
 }
-.w-15{
-    width: 15px;
+
+.w-10 {
+    width: 10px;
 }
+
 .taskMenuItem li {
     text-align: center;
     padding: 10px 10px;
 }
-.line-through{
+
+.line-through {
     text-decoration: line-through;
 }
 </style>

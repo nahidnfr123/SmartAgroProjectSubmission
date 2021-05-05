@@ -478,6 +478,7 @@ export default {
             this.getCart();
         },
         viewProduct(product) {
+            this.displayImageKey = 0;
             this.showProductModal = true;
             this.product = product;
         },

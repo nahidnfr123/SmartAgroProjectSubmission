@@ -92,16 +92,17 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <tr v-for="(order, us) in allOrders" :key="order.id">
+                                        <tr v-for="(order, us) in allOrders" :key="order.id" :class="[!isProductSeen(order)?'text-primary font-weight-bold':'']">
                                             <th scope="row" style="width: 60px !important;">
                                                 <span v-if="productDetailsId == order.id"><i class="fas fa-angle-down"></i></span>
                                                 <span v-else><i class="fas fa-angle-up"></i></span>
-                                                <a href="" style="margin-left: 4px" @click.stop.prevent="showDetails(order.id)">{{ order.order_no }}</a>
+                                                <a href="" style="margin-left: 4px" @click.stop.prevent="showDetails(order)">{{ order.order_no }}</a>
                                             </th>
                                             <td>
                                                 <template v-if="productDetailsId == order.id">
                                                     <div v-if="order.products && order.products.length" v-for="product in order.products" class="rounded mb-1"
-                                                    :class="[product.individual_order_status == 'canceled'?'bg-danger text-white':'']">
+                                                         :class="[product.individual_order_status == 'canceled'?'bg-danger text-white':'']">
+                                                        {{ product.seen }}
                                                         <template v-if="!search.sellerId || (search.sellerId && search.sellerId == product.seller.id)">
                                                             <img :src="product.first_image" alt="" style="height: 50px !important;" class="rounded">
                                                             <div>
@@ -148,12 +149,12 @@
                                                     <div>
                                                         {{ order.order_status }}
                                                     </div>
-                                                    <!--                                                    <select name="status" id="status" @change.stop.prevent="updateStatus($event, order.id)" v-if="user.id == 1">
-                                                                                                            <option value=""></option>
-                                                                                                            <option value="confirmed" :selected="order.order_status == 'confirmed'?'selected':''">confirm</option>
-                                                                                                            <option value="pending" :selected="order.order_status == 'pending'?'selected':''">pending</option>
-                                                                                                            <option value="cancel" :selected="order.order_status == 'cancel'?'selected':''">cancel</option>
-                                                                                                        </select>-->
+                                                    <!--<select name="status" id="status" @change.stop.prevent="updateStatus($event, order.id)" v-if="user.id == 1">
+                                                        <option value=""></option>
+                                                        <option value="confirmed" :selected="order.order_status == 'confirmed'?'selected':''">confirm</option>
+                                                        <option value="pending" :selected="order.order_status == 'pending'?'selected':''">pending</option>
+                                                        <option value="cancel" :selected="order.order_status == 'cancel'?'selected':''">cancel</option>
+                                                    </select>-->
                                                 </div>
                                                 <div v-else class="badge badge-light text-dark">{{ order.order_status }}</div>
                                             </td>
@@ -324,6 +325,7 @@ import Pagination from "../../../components/pagination";
 import CancelIcon from "../../../components/icon/cancel-icon";
 import ConfirmedIcon from "../../../components/icon/confirmed-icon";
 import PendingIcon from "../../../components/icon/pending-icon";
+import axios from "axios";
 
 export default {
     name: "ManageOrders",
@@ -374,15 +376,11 @@ export default {
     },
     methods: {
         checkRoles() {
-            return true;
             let roles = this.roles;
-            if (roles.includes('customer') || roles.includes('retailer') || roles.includes('admin') || roles.includes('developer') || roles.includes('super admin')) {
-                console.log('true');
-            }
+            return !roles.includes('agricultural-officer');
         },
         checkSellerHasOrders() {
             if (this.roles.includes('farmer')) {
-
                 return true;
             }
             return false;
@@ -399,7 +397,6 @@ export default {
         checkUserRole() {
             const roles = this.roles;
             if (roles && roles.length) {
-                //console.log('hello');
                 if (roles.includes('farmer')) {
                     this.search.sellerId = this.user.id;
                 } else {
@@ -439,7 +436,19 @@ export default {
                     this.loading = false;
                 });
         },
-        showDetails(order_id) {
+        isProductSeen(order) {
+            let counter = 0;
+            if (order.products) {
+                for (let x = 0; x < order.products.length; x++) {
+                    if (order.products[x].seen == 1 && order.products[x].seller_id == this.user.id) {
+                        counter++;
+                    }
+                }
+            }
+            return counter; /// if false ... text bold ....
+        },
+        showDetails(order) {
+            let order_id = order.id;
             if (this.productDetailsId == 0) {
                 this.productDetailsId = order_id;
             } else if (this.productDetailsId != order_id) {
@@ -447,6 +456,25 @@ export default {
             } else {
                 this.productDetailsId = 0;
             }
+            if (!this.isProductSeen(order)) {
+                this.updateOrderSeen(order);
+            }
+        },
+        async updateOrderSeen(order) {
+            let order_id = order.id;
+            let formData = new FormData();
+            formData.append('_method', 'PUT');
+            axios.post(`api/product/order/update/seen/${order_id}`, formData)
+                .then((res) => {
+                    let order = res.data.data;
+                    this.allOrders.map(ord => {
+                        if (ord.id === order.id) {
+                            for (let key in order) {
+                                ord[key] = order[key];
+                            }
+                        }
+                    });
+                });
         },
         async removeOrder(order_id) {
             this.$swal.fire({
