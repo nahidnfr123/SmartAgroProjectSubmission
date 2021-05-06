@@ -46,7 +46,7 @@
                                 <div class="mt-1" v-else><strong>Retail price starts from: </strong>{{ product.minimum_order_amount }} {{ product.stock_type }}</div>
                                 <div class="mt-2">
                                     <h4>About:</h4>
-                                    {{ product.description }}
+                                    <div v-html=product.description></div>
                                 </div>
                                 <hr>
                                 <div class="mt-2">

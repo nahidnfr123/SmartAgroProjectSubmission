@@ -71,5 +71,8 @@
 <script src="{{ asset('admin/app-assets/vendors/js/jquery.sharrre.js') }}" type="text/javascript" defer></script>
 <script src="{{ asset('admin/app-assets/js/scripts/pages/chat-application.js') }}" type="text/javascript" defer></script>
 <!-- END: Theme JS-->
+
+
+
 </body>
 </html>

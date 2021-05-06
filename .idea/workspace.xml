@@ -2,25 +2,28 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="46b851a5-783b-4b26-96ce-1bce596dde7e" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/app/Http/Controllers/Api/PaymentController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Models/Bid.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/database/migrations/2021_05_06_033939_create_bids_table.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/database/migrations/2021_05_06_034052_create_bid_user_table.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/assets/js/views/dashboard/Inventory/component/Bid-Form.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/assets/js/views/dashboard/Inventory/component/ManageProduct.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Api/ProductOrderController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Api/ProductOrderController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Api/UserController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Api/UserController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Resources/ProductWithPivot.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Resources/ProductWithPivot.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/Order.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Order.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2021_03_26_194534_create_order_product_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2021_03_26_194534_create_order_product_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Api/ProductController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Api/ProductController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2021_03_26_194307_create_products_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2021_03_26_194307_create_products_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2021_03_26_194533_create_orders_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2021_03_26_194533_create_orders_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/seeders/ProductTableSeeder.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/seeders/ProductTableSeeder.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/dist/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/dist/js/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/assets/js/layouts/AppLayout.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/assets/js/layouts/AppLayout.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/assets/js/layouts/Dashboard.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/assets/js/layouts/Dashboard.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/assets/js/store/auth.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/assets/js/store/auth.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/assets/js/store/user.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/assets/js/store/user.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/assets/js/views/About.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/assets/js/views/About.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/assets/js/views/Index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/assets/js/views/Index.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/assets/js/views/dashboard/Index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/assets/js/views/dashboard/Index.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/assets/js/views/dashboard/Inventory/ManageOrders.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/assets/js/views/dashboard/Inventory/ManageOrders.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/assets/js/views/dashboard/chat/ContactList.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/assets/js/views/dashboard/chat/ContactList.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/assets/js/views/dashboard/todos/TodoItem.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/assets/js/views/dashboard/todos/TodoItem.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/assets/js/views/market/Market.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/assets/js/views/market/Market.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/assets/js/views/dashboard/Inventory/ManageProduct.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/assets/js/views/dashboard/Inventory/ManageProduct.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/assets/js/views/dashboard/Inventory/Product-view.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/assets/js/views/dashboard/Inventory/Product-view.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/assets/js/views/dashboard/Users/Profile.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/assets/js/views/dashboard/Users/Profile.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/assets/js/views/dashboard/Users/ViewProfile.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/assets/js/views/dashboard/Users/ViewProfile.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/layouts/dashboard.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/dashboard.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/api.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -194,13 +197,14 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/resources/assets/js/views/dashboard" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/resources/assets/js/views/dashboard/Inventory/component" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="preferences.editor.code.editing" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Codeknight\Desktop\Final Project Submission\03-Smart-Agro-Camelion\resources\assets\js\views\dashboard\Inventory\component" />
       <recent name="C:\Users\Codeknight\Desktop\Final Project Submission\03-Smart-Agro-Camelion\resources\assets\js\views\dashboard" />
     </key>
   </component>
@@ -228,6 +232,9 @@
       <workItem from="1620044192372" duration="18728000" />
       <workItem from="1620133618647" duration="17183000" />
       <workItem from="1620194902249" duration="33723000" />
+      <workItem from="1620247768950" duration="1878000" />
+      <workItem from="1620250714325" duration="3726000" />
+      <workItem from="1620286530200" duration="26204000" />
     </task>
     <servers />
   </component>

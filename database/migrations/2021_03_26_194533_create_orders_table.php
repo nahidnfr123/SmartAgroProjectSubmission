@@ -23,6 +23,7 @@ class CreateOrdersTable extends Migration
             $table->enum("order_status", ["confirmed", "pending", "canceled", 'processing'])->default('pending');
             $table->string('payment_status')->default('pending');  //paid , pending , not paid,
             $table->boolean('pinned')->default(0);
+            $table->string('transaction_id')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

@@ -106,7 +106,7 @@ Route::middleware(['auth:sanctum', 'verified', 'role:developer|super admin|admin
 });
 /// End posts ///
 
-
+/*Route::post('token', [\App\Http\Controllers\Api\PaymentController::class, 'token'])->name('token');*/
 
 // Products ... //
 Route::get('/product/category', [ProductCategoryController::class, 'index']);

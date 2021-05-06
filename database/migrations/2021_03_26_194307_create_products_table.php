@@ -26,6 +26,7 @@ class CreateProductsTable extends Migration
             $table->integer('retail_price')->default(0);
             $table->integer('minimum_order_amount')->default(1);
             $table->string('currency')->default('TK');
+            $table->boolean('can_bid')->default(0);
             $table->text('description');
             $table->timestamps();
             $table->softDeletes();

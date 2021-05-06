@@ -102,7 +102,6 @@
                                                 <template v-if="productDetailsId == order.id">
                                                     <div v-if="order.products && order.products.length" v-for="product in order.products" class="rounded mb-1"
                                                          :class="[product.individual_order_status == 'canceled'?'bg-danger text-white':'']">
-                                                        {{ product.seen }}
                                                         <template v-if="!search.sellerId || (search.sellerId && search.sellerId == product.seller.id)">
                                                             <img :src="product.first_image" alt="" style="height: 50px !important;" class="rounded">
                                                             <div>

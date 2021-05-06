@@ -68,7 +68,7 @@ class ProductTableSeeder extends Seeder
         $cate->save();
 
         $cate = new ProductCategory();
-        $cate->title = 'cow';
+        $cate->title = 'Cow';
         $cate->slug = 'cow';
         $cate->user_id = 1;
         $cate->parent_id = 4;

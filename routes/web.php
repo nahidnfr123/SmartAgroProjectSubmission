@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\SocialAuthController;
 use App\Http\Controllers\BaseController;
+use App\Http\Controllers\SslCommerzPaymentController;
 use Illuminate\Support\Facades\Route;
 
 use Laravel\Fortify\Features;
@@ -56,8 +57,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
 });
 
 // End Fortify ...
-
-
 
 
 Route::get('/dashboard/@{username}', [BaseController::class, 'dashboard'])->name('dashboard')->middleware(['auth', 'verified']);

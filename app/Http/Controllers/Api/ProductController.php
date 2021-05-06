@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ProductResource;
+use App\Models\Bid;
 use App\Models\Post;
 use App\Models\Product;
 use App\Models\ProductCategory;
@@ -111,6 +112,7 @@ class ProductController extends Controller
         $product->product_name = ucfirst($request->product_name);
         //$product->product_slug = $request->product_slug;
         $product->description = $request->description;
+        $product->can_bid = $request->can_bid;
         $product->brand_id = $request->brand_id;
         $product->total_stock = $request->total_stock;
         $product->stock_type = $request->stock_type;
@@ -118,12 +120,7 @@ class ProductController extends Controller
         $product->retail_price = $request->retail_price;
         $product->minimum_order_amount = $request->minimum_order_amount;
         $product->seller_id = Auth::id();
-
-        if ($request->status == 'false') {
-            $product->status = false;
-        } else {
-            $product->status = true;
-        }
+        $request->status == 'false' ? $product->status = false : $product->status = true;
 
         $product->save();
         $product->productCategory()->attach($request->category);

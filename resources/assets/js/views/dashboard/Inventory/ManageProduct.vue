@@ -52,7 +52,7 @@
                                                 <Custom_Text_Input
                                                     class="mb-2"
                                                     type="number"
-                                                    label="Total stock"
+                                                    :label="'Total stock ('+ productData.stock_type+')'"
                                                     placeholder=""
                                                     id="total_stock"
                                                     name="total_stock"
@@ -65,8 +65,9 @@
                                                     <select name="stock_type" id="stock_type" v-model="productData.stock_type" class="form-control">
                                                         <option value="kg" selected>Kg</option>
                                                         <option value="lbs">lbs (1 lbs = 40 kg)</option>
-                                                        <option value="ton">Quintal (1 quintal = 48.95 kg)</option>
+                                                        <option value="quantile">Quintal (1 quintal = 48.95 kg)</option>
                                                         <option value="ton">Ton (1 Ton = 1000 kg)</option>
+                                                        <option value="dozen">Dozen</option>
                                                         <option value="piece">Piece</option>
                                                         <!--                                                        <option value="quantity">Quantity</option>-->
                                                     </select>
@@ -81,7 +82,7 @@
                                                 <Custom_Text_Input
                                                     class="mb-2"
                                                     type="number"
-                                                    label="Regular price"
+                                                    label="Regular price (TK)"
                                                     placeholder=""
                                                     id="regular_price"
                                                     name="regular_price"
@@ -92,7 +93,7 @@
                                                 <Custom_Text_Input
                                                     class="mb-2"
                                                     type="number"
-                                                    label="Retail price"
+                                                    label="Retail price (TK)"
                                                     placeholder=""
                                                     id="retail_price"
                                                     name="retail_price"
@@ -106,7 +107,7 @@
                                         <Custom_Text_Input
                                             class="mb-2"
                                             type="number"
-                                            label="Minimum order amount (in kg or number)"
+                                            :label="'Minimum order amount in ('+productData.stock_type+')'"
                                             placeholder=""
                                             id="minimum_order_amount"
                                             name="minimum_order_amount"
@@ -208,6 +209,7 @@
                                     </div>
 
 
+
                                     <div class="text-right">
                                         <Custom_Loading_Button
                                             v-if="!editMode"
@@ -232,7 +234,6 @@
                 </div>
             </div>
 
-
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
@@ -241,9 +242,11 @@
                                 <button type="button" class="btn btn-sm btn-danger btn-glow"
                                         @click.stop.prevent="getDeletedProducts"
                                         v-if="!showingDeletedProducts">
+                                    <i class="fas fa-trash"></i>
                                     Show deleted products <span v-if="deletedProductCount">({{ deletedProductCount }})</span>
                                 </button>
                                 <button type="button" class="btn btn-sm btn-primary btn-glow" v-else @click.stop.prevent="getProd">
+                                    <i class="fas fa-arrow-left"></i>
                                     Show all products <span v-if="allProductCount">({{ allProductCount }})</span>
                                 </button>
                             </div>
@@ -281,7 +284,8 @@
                                     <div>
                                         <span>Regular price: <strong>{{ product.regular_price }} Tk</strong>,</span>
                                         <span>Retail price: <strong>{{ product.retail_price }} Tk</strong>,</span>
-                                        <span>Stock: <strong>{{ product.total_stock }} {{ product.stock_type }}</strong></span>
+                                        <span v-if="product.total_stock==0" class="text-danger">Stock: <strong>{{ product.total_stock }}</strong></span>
+                                        <span v-else>Stock: <strong>{{ product.total_stock }} {{ product.stock_type }}</strong></span>
                                     </div>
                                     <div>
                                         <span>Category: <strong v-for="category in product.categories">{{ category.title }}</strong></span>
@@ -338,17 +342,15 @@
             <div v-if="!loading" class="alert alert-info text-center">No products available!</div>
         </div>
 
-
     </div>
 </template>
 
 <script>
 import CKEditor from '@ckeditor/ckeditor5-vue2';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-import {mapActions, mapGetters, mapMutations} from "vuex";
+import {mapActions, mapGetters} from "vuex";
 import Pagination from "../../../components/pagination";
 import CategoryList from "../../../components/category-list";
-
 
 export default {
     name: 'ManageProducts',
@@ -379,6 +381,8 @@ export default {
                 category: '',
                 description: '',
                 images: [],
+
+                minimum_bid_amount: '',
             },
             imageUrls: [],
             uploadedImageUrls: [],
@@ -409,7 +413,7 @@ export default {
                 this.searching = true;
                 this.getProductsAction(false);
             }, 500), deep: true
-        }
+        },
     },
     computed: {
         ...mapGetters({
@@ -428,7 +432,6 @@ export default {
         this.getProd();
     },
     methods: {
-        ...mapMutations({}),
         ...mapActions({
             fetchProductCategories: 'productCategory/fetchProductCategory',
             fetchProducts: 'product/fetchProducts',
@@ -572,6 +575,8 @@ export default {
             formData.append('minimum_order_amount', this.productData.minimum_order_amount);
             formData.append('category', this.productData.category);
             formData.append('description', this.productData.description);
+
+
             if (this.productData.images.length) {
                 for (let i = 0; i < this.productData.images.length; i++) {
                     formData.append('images[]', this.productData.images[i]);
@@ -642,6 +647,7 @@ export default {
             this.AddEditForm = true
         },
         clearForm() {
+            this.errors = {};
             this.loading = false;
             this.processing = false;
             this.AddEditForm = false;

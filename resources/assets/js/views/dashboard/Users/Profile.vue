@@ -137,9 +137,7 @@
                                                 <div class="mb-1"><strong>Retailer interest: </strong>{{ userDetails.retailer.retailer_interest }}</div>
                                                 <div class="mb-1" v-if="userDetails.about">
                                                     <strong>About: </strong>
-                                                    <div>
-                                                        {{ userDetails.about }}
-                                                    </div>
+                                                    <div v-html=userDetails.about></div>
                                                 </div>
                                             </div>
                                         </div>

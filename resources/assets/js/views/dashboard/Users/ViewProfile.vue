@@ -148,9 +148,7 @@
                                                 </div>
                                                 <div class="mb-1" v-if="userProfile.about">
                                                     <strong>About: </strong>
-                                                    <div>
-                                                        {{ userProfile.about }}
-                                                    </div>
+                                                    <div v-html=userProfile.about></div>
                                                 </div>
                                                 <hr>
                                                 <div v-if="products && Object.keys(products).length" class="mt-2">
