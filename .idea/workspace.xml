@@ -1,30 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="46b851a5-783b-4b26-96ce-1bce596dde7e" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/app/Http/Controllers/Api/PaymentController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Models/Bid.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2021_05_06_033939_create_bids_table.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2021_05_06_034052_create_bid_user_table.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/assets/js/views/dashboard/Inventory/component/Bid-Form.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/assets/js/views/dashboard/Inventory/component/ManageProduct.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Api/ProductController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Api/ProductController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2021_03_26_194307_create_products_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2021_03_26_194307_create_products_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2021_03_26_194533_create_orders_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2021_03_26_194533_create_orders_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/seeders/ProductTableSeeder.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/seeders/ProductTableSeeder.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/dist/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/dist/js/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/assets/js/views/dashboard/Inventory/ManageOrders.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/assets/js/views/dashboard/Inventory/ManageOrders.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/assets/js/views/dashboard/Inventory/ManageProduct.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/assets/js/views/dashboard/Inventory/ManageProduct.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/assets/js/views/dashboard/Inventory/Product-view.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/assets/js/views/dashboard/Inventory/Product-view.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/assets/js/views/dashboard/Users/Profile.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/assets/js/views/dashboard/Users/Profile.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/assets/js/views/dashboard/Users/ViewProfile.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/assets/js/views/dashboard/Users/ViewProfile.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/layouts/dashboard.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/dashboard.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/api.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
-    </list>
+    <list default="true" id="46b851a5-783b-4b26-96ce-1bce596dde7e" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -235,6 +212,7 @@
       <workItem from="1620247768950" duration="1878000" />
       <workItem from="1620250714325" duration="3726000" />
       <workItem from="1620286530200" duration="26204000" />
+      <workItem from="1620377542734" duration="485000" />
     </task>
     <servers />
   </component>
