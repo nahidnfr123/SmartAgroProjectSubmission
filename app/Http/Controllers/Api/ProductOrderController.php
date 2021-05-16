@@ -74,6 +74,7 @@ class ProductOrderController extends Controller
         $Orders->user_id = \auth()->id();
         $Orders->address_id = $request->address_id;
         $Orders->total_price = $request->total_price;
+        $Orders->payment_method = $request->payment_method;
         $Orders->save();
 
         foreach ($products as $product) {

@@ -96,6 +96,8 @@ Route::get('/post/{post_slug}', [PostController::class, 'show']); // Show Posts 
 Route::get('/getAuthor/{id}', [UserController::class, 'getAuthor']); // Get authors ...
 
 
+Route::post('/contact/reply', [\App\Http\Controllers\Api\ContactController::class,]);
+Route::resource('/contact', \App\Http\Controllers\Api\ContactController::class);
 
 Route::middleware(['auth:sanctum', 'verified', 'role:developer|super admin|admin|agricultural-officer'])->group(function () {
     Route::resource('/post/category', PostCategoryController::class); // Categories ...
@@ -121,8 +123,8 @@ Route::middleware(['auth:sanctum', 'verified', 'role:developer|super admin|admin
     Route::put('/product/order/{order_id}/{product_id}', [ProductOrderController::class, 'update']);
     Route::put('/product/order/update/seen/{order_id}', [ProductOrderController::class, 'updateSeen']);
     Route::apiResource('/product/order', ProductOrderController::class);
-});
 
+});
 
 
 Route::middleware(['auth:sanctum', 'verified', 'role:developer|super admin|admin|farmer'])->group(function () {

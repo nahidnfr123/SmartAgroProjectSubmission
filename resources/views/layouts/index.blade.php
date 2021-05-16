@@ -29,6 +29,7 @@
             height: 400px !important;
             width: 100% !important;
         }
+
         #goog-gt-tt {
             visibility: hidden !important;
             /*display: none !important;*/
@@ -152,6 +153,7 @@
         }
     }
 </script>
+
 
 </body>
 </html>

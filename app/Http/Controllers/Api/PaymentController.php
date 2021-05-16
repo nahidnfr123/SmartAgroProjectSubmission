@@ -19,8 +19,7 @@ class PaymentController extends Controller
 
     public function token()
     {
-
-        $request_token = bkash_Get_Token();
+        $request_token = $this->_bkash_Get_Token();
         $idtoken = $request_token['id_token'];
 
         $_SESSION['token'] = $idtoken;

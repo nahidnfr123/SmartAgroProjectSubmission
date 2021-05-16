@@ -70,7 +70,7 @@
                                 <i class="icon_mail_alt"></i>
                             </div>
                             <h5>Email</h5>
-                            <h6>info.smartagro@gmail.com</h6>
+                            <h6>info.krishivhai@gmail.com</h6>
                         </div>
                     </div>
 
@@ -96,22 +96,64 @@
                             </div>
                             <!-- Contact Form Area -->
                             <div class="contact-form-area">
-                                <form action="#" method="post">
+                                <form action="" method="post">
                                     <div class="row">
                                         <div class="col-lg-6">
-                                            <input type="text" class="form-control" name="name" placeholder="Your Name">
+                                            <Custom_Text_Input
+                                                class="mb-2"
+                                                type="text"
+                                                label="Full name"
+                                                placeholder="name"
+                                                id="name"
+                                                name="name"
+                                                v-model="contactForm.name"
+                                                :error="errors.name && Array.isArray(errors.name) ? errors.name[0] : errors.name"/>
                                         </div>
                                         <div class="col-lg-6">
-                                            <input type="email" class="form-control" name="email" placeholder="Your Email">
+                                            <div class="form-group">
+                                                <Custom_Text_Input
+                                                    class="mb-2"
+                                                    type="email"
+                                                    label="Email"
+                                                    placeholder="email"
+                                                    id="email"
+                                                    name="email"
+                                                    v-model="contactForm.email"
+                                                    :error="errors.email && Array.isArray(errors.email) ? errors.email[0] : errors.email"/>
+                                            </div>
                                         </div>
                                         <div class="col-12">
-                                            <input type="text" class="form-control" name="subject" placeholder="Your Subject">
+                                            <div class="form-group">
+                                                <Custom_Text_Input
+                                                    class="mb-2"
+                                                    type="text"
+                                                    label="Subject"
+                                                    placeholder="subject"
+                                                    id="subject"
+                                                    name="subject"
+                                                    v-model="contactForm.subject"
+                                                    :error="errors.subject && Array.isArray(errors.subject) ? errors.subject[0] : errors.subject"/>
+                                            </div>
                                         </div>
                                         <div class="col-12">
-                                            <textarea name="message" class="form-control" cols="30" rows="10" placeholder="Your Message"></textarea>
+                                            <div class="form-group">
+                                                <Custom_Text_Input
+                                                    class="mb-2"
+                                                    type="textarea"
+                                                    label="Message"
+                                                    placeholder="message"
+                                                    id="message"
+                                                    name="message"
+                                                    v-model="contactForm.message"
+                                                    :error="errors.message && Array.isArray(errors.message) ? errors.message[0] : errors.message"/>
+                                            </div>
                                         </div>
                                         <div class="col-12">
-                                            <button type="submit" class="btn famie-btn">Send Message</button>
+                                            <button type="submit" class="btn famie-btn"
+                                                    @click.stop.prevent="sendMessage()">
+                                                <span v-if="loading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                                Send Message
+                                            </button>
                                         </div>
                                     </div>
                                 </form>
@@ -135,7 +177,60 @@
 
 <script>
 export default {
-    name: "ContactUs"
+    name: "ContactUs",
+    data() {
+        return {
+            contactForm: {
+                name: '',
+                email: '',
+                subject: '',
+                message: '',
+            },
+            loading: false,
+            errors: {},
+        }
+    },
+    methods: {
+        clearForm() {
+            this.contactForm = {
+                name: '',
+                email: '',
+                subject: '',
+                message: '',
+            }
+        },
+        validateData() {
+            if (!this.contactForm.name.trim()) this.errors.name = 'Name is required!';
+            if (!this.contactForm.email.trim()) this.errors.email = 'Email is required!';
+            if (!this.contactForm.subject.trim()) this.errors.subject = 'Subject is required!';
+            if (!this.contactForm.message.trim()) this.errors.message = 'Message is required!';
+        },
+        async sendMessage() {
+            this.loading = true;
+            this.errors = {};
+            this.$Progress.start();
+
+            this.validateData();
+
+            if (Object.keys(this.errors).length) {
+                this.$Progress.fail();
+                this.loading = false;
+                return false;
+            }
+
+            await axios.post('api/contact', this.contactForm).then((res) => {
+                this.$Progress.finish();
+                this.clearForm();
+                this.$store.dispatch('snackbar/addSnack', {color: 'success', msg: 'Message sent successfully. We will reply as soon as possible.', snakbarType: 'Success'}, {root: true});
+            }).catch((err) => {
+                this.errors = err.response.status == 422 ? err.response.data.errors : 'The given data is invalid.';
+                this.$store.dispatch('snackbar/addSnack', {color: 'danger', msg: err, snakbarType: 'error'}, {root: true});
+                this.$Progress.fail();
+            }).finally(() => {
+                this.loading = false;
+            });
+        }
+    }
 }
 </script>
 

@@ -1,5 +1,13 @@
 <template>
     <div class="container">
+        <div class="fullPageLoader" v-if="onlinePaymentSubmit">
+            <div class="d-flex justify-content-center align-items-center align-content-center text-white" style="height: 100%; width: 100%;">
+                <div class="text-center">
+                    <div class="spinner-border spinner-border-sm" role="status" aria-hidden="true"/>
+                    <div>Initiating online payment process...</div>
+                </div>
+            </div>
+        </div>
         <div class="col-12 col-md-12 col-lg-12 m-auto mb-4">
             <h3 class="text-center mt-4 text-muted">Checkout</h3>
             <hr>
@@ -43,14 +51,21 @@
                 </div>
 
                 <div class="col-12 col-lg-12 col-xl-5 mt-4" v-if="!loading">
-                    <h6>Payment method</h6>
+                    <h6>Payment method:</h6>
                     <div class="form-group">
-                        <input type="checkbox" checked id="paymentMethod" readonly="readonly" disabled>
-                        <label for="paymentMethod">Cash on delivery</label>
+                        <input type="radio" id="cashOnDelivery" name="paymentOptions" value="cashOnDelivery" v-model="paymentMethod"
+                               class="form-group">
+                        <label for="cashOnDelivery">Cash on delivery</label>
+                        <br>
+                        <input type="radio" id="onlinePayment" name="paymentOptions" value="onlinePayment" v-model="paymentMethod"
+                               class="form-group">
+                        <label for="onlinePayment">Online payment</label>
+
+                        <!--                        <input type="checkbox" checked id="paymentMethod" readonly="readonly" disabled>
+                                                <label for="paymentMethod">Cash on delivery</label>-->
                     </div>
                     <hr>
                     <h6>Address</h6>
-                    <hr>
                     <div class="mb-2">
                         <template v-if="userDetails && Object.keys(userDetails).length && userDetails.address">
                             <div v-for="(address, key) in userDetails.address" class="d-flex align-items-center justify-content-between p-2 rounded" :class="[addressId==address.id?'bg-gray':'']">
@@ -120,6 +135,8 @@ export default {
     components: {AddressSelectComponent},
     data() {
         return {
+            onlinePaymentSubmit: false,
+            paymentMethod: 'cashOnDelivery', // 'cashOnDelivery',
             loading: false,
             showAddressForm: '',
             userAddressForm: {
@@ -232,17 +249,25 @@ export default {
                 this.$Progress.fail();
                 return;
             }
-
             if (!this.addressId) {
                 await this.$store.dispatch('snackbar/addSnack', {color: 'danger', msg: 'Please select address.', snakbarType: 'Error'}, {root: true});
                 this.$Progress.fail();
                 return;
             }
+            if (this.paymentMethod === 'onlinePayment') {
+                this.onlinePaymentSubmit = true;
+                await this.proceedToPayment();
+            } else {
+                await this.placeOrder();
+            }
+        },
+        async placeOrder() {
             await axios.post('api/product/order', {
                 address_id: this.addressId,
                 total_price: this.total_price,
+                payment_method: this.paymentMethod,
                 cartData: this.$store.state.cart.cart,
-            },).then((response) => {
+            }).then((response) => {
                 this.$store.dispatch('cart/clearCart');
                 this.clearForm();
                 window.location.href = `dashboard/@${this.user.username}/products/orders`;
@@ -252,10 +277,22 @@ export default {
                 this.$Progress.finish();
             });
         },
+        async proceedToPayment() {
+            return false;
+        }
     }
 }
 </script>
 
 <style scoped>
-
+.fullPageLoader {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100vw;
+    z-index: 1000;
+    background-color: rgba(20, 20, 20, .5);
+    overflow: hidden !important;
+}
 </style>

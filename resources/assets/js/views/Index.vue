@@ -442,20 +442,39 @@
             </div>
         </section>
         <!-- ##### News Area End ##### -->
+
+        <ViewProducts
+            :showProductModal="showProductModal"
+            :canAddToCart="canAddToCart"
+            :user="user"
+            :roles="roles"
+            :product="product"
+            @closeViewProductModal="closeViewProductModal"
+            @addToCart="addToCart($event)"/>
+
     </div>
 </template>
 
 <script>
 import NFR_VueForm from "../CustomComponents/NFR_Forms/components/All";
 import {mapActions, mapGetters} from "vuex";
+import ViewProducts from "./market/ViewProducts";
+import Pagination from "../components/pagination";
 
 export default {
     name: "Home",
-    components: {NFR_VueForm,},
+    components: {
+        NFR_VueForm,
+        ViewProducts,
+        Pagination,
+    },
+
     data() {
         return {
+            canAddToCart: false,
             BaseUrl: process.env.MIX_BASE_URL,
             products: {},
+            product: {},
             farmingPracticePosts: {},
             blogPosts: {},
             loading: false,
@@ -483,7 +502,9 @@ export default {
                 category_name: '',
                 categories: [],
                 limit: '4',
-            }
+            },
+            showProductModal: false,
+
         }
     },
     computed: {
@@ -572,6 +593,14 @@ export default {
             }).catch((error) => {
 
             });
+        },
+        viewProduct(product) {
+            this.showProductModal = true;
+            this.product = product;
+        },
+        closeViewProductModal() {
+            this.showProductModal = false;
+            this.product = {};
         },
     },
     mounted() {

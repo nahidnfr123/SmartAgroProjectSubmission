@@ -53,6 +53,7 @@ import ContactUs from "./views/ContactUs";
 import About from "./views/About";
 import Todo from "./views/dashboard/todos/Todo";
 import TodoItem from "./views/dashboard/todos/TodoItem";
+import ContactUsMessages from "./views/dashboard/ContactUsMessages";
 
 function requireAuthenticated(to, from, next) {
     const authenticated = store.getters["auth/authenticated"];
@@ -308,6 +309,9 @@ const routes = [
             },
             {
                 path: 'find-people', name: 'Find People', component: FindPeople,
+            },
+            {
+                path: 'contact-us', name: 'Contact Us', component: ContactUsMessages,
             },
             {
                 path: 'agro/loan', name: 'Loan', component: Test,

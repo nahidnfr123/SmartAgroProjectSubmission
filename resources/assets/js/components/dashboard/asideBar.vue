@@ -109,6 +109,7 @@ export default {
                         {to: {name: 'Find People'}, label: 'Find people', icon: 'fas fa-user'},
                     ]
                 },
+                {to: {name: 'Contact Us'}, label: 'Contact Us', icon: 'fas fa-envelope-open', accessibleTo: ['developer', 'super admin', 'admin'],},
                 /*{to: {name: 'Loan'}, label: 'Loan', icon: '', accessibleTo: ['farmer'],},*/
                 /*{to: {name: 'Disease Center'}, label: 'Disease Center', icon: 'far fa-bell', accessibleTo: ['farmer'],},*/
                 /*{to: {name: 'Help'}, label: 'Help', icon: 'fas fa-question-circle'},

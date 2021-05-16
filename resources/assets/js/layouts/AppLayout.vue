@@ -117,26 +117,26 @@ export default {
     created() {
         // **** Progressbar Start *** //
         //  [AppLayout.vue specific] When AppLayout.vue is first loaded start the progress bar
-        this.$Progress.start()
+        this.$Progress.start();
         //  hook the progress bar to start before we move router-view
         this.$router.beforeEach((to, from, next) => {
             //  does the page we want to go to have a meta.progress object
             if (to.meta.progress !== undefined) {
-                let meta = to.meta.progress
+                let meta = to.meta.progress;
                 // parse meta tags
-                this.$Progress.parseMeta(meta)
+                this.$Progress.parseMeta(meta);
             }
             //  start the progress bar
-            this.$Progress.start()
+            this.$Progress.start();
             // Scroll to top ...
             document.getElementById('mainContainer').scrollTo(0, 0);
             //  continue to next page
-            next()
+            next();
         })
         //  hook the progress bar to finish after we've finished moving router-view
         this.$router.afterEach((to, from) => {
             //  finish the progress bar
-            this.$Progress.finish()
+            this.$Progress.finish();
         })
         // **** Progressbar end **** //
     }
